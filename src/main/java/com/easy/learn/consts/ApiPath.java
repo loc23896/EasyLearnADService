@@ -19,9 +19,26 @@ public interface ApiPath {
     String TRAINER_SALARY_CREATE = API + "/trainersalary/create";
     String TRAINER_SALARY_UPDATE = API + "/trainersalary/update";
     String TRAINER_SALARY_DELETE = API + "/trainersalary/delete";
+
     // end
 
-    String ADMIN_GET_INDEX = API+"/admin";
+    //trainersalarypaidSUMMARY
+    String TRAINER_SALARY_SUMMARY_GET_ALL = API + "/trainer-salary-summary/get-all";
+    String TRAINER_SALARY_SUMMARY_GET_ONE = API + "/trainer-salary-summary/get-one";
+    String TRAINER_SALARY_SUMMARY_CREATE = API + "/trainer-salary-summary/create";
+    String TRAINER_SALARY_SUMMARY_UPDATE = API + "/trainer-salary-summary/update";
+    String TRAINER_SALARY_SUMMARY_DELETE = API + "/trainer-salary-summary/delete";
+
+
+    //ADMIN_TRAINER_COURSE_EDIT by LOC
+    String COURSE_EDIT_GET_ALL = API + "/course-edit/get-all";
+    String COURSE_EDIT_GET_ONE = API + "/course-edit/get-one";
+    String COURSE_EDIT_CREATE = API + "/course-edit/create";
+    String COURSE_EDIT_UPDATE = API + "/course-edit/update";
+    String COURSE_EDIT_DELETE = API + "/course-edit/delete";
+
+//END ADMIN_TRAINER_COURSE_EDIT
+
 
 
 }

@@ -26,14 +26,14 @@ public class TrainerSalaryPaidController {
 
     @PostMapping("/save")
     public String saveTrainerSalaryPaid(@ModelAttribute("trainerSalaryPaidDTO") TrainerSalaryPaidDTO trainerSalaryPaidDTO ) {
-        if (trainerSalaryPaidDTO.getId() == null) {
 
+        if (trainerSalaryPaidDTO.getId() == null) {
             trainerSalaryService.createTrainerSalaryPaid(trainerSalaryPaidDTO);
         } else {
 
             trainerSalaryService.updateTrainerSalaryPaid(trainerSalaryPaidDTO);
-
         }
+
         return "redirect:/trainersalary/list";
     }
 
@@ -41,6 +41,7 @@ public class TrainerSalaryPaidController {
     public String viewTrainerSalaryPaid(@PathVariable Long id, Model model) {
         TrainerSalaryPaid trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
+
         return "/pages/finance_management/view";
     }
 
