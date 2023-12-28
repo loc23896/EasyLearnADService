@@ -20,6 +20,8 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Registered Course</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tr th:each="studentDTO : ${studentList}">
@@ -29,7 +31,14 @@
                     <td th:text="${studentDTO.email}"></td>
                     <td th:text="${studentDTO.phone}"></td>
                     <td th:text="${studentDTO.classId}"></td>
+                    <td>
+                        <a class="btn btn-info" th:href="@{'/student/edit/' + ${studentDTO.id}}">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-info btn-danger" th:href="@{'/student/delete/' + ${studentDTO.id}}">Delete</a>
+                    </td>
                 </tr>
+
             </table>
             <a class="btn btn-primary btn-sm" style="display: block; margin: 0 auto;" th:href="@{/student/add}">Add</a>
         </div>

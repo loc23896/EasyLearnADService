@@ -24,7 +24,7 @@
             <!-- End of Topbar -->
 
             <!-- Navbar -->
-            <div th:replace="pages/admin/admin_fragment/navbar/member_student :: navbar"></div>
+            <div th:replace="pages/admin/member_managements/admin_member_student_edit :: navbar"></div>
             <!-- End Navbar -->
 
             <!-- Begin Page Content -->
@@ -36,11 +36,11 @@
 
 
                     <!-- Title page content -->
-                    <div th:replace="pages/admin/admin_fragment/titlePageContent/member_student :: titlePageContentTable"></div>
+                    <div th:replace="pages/admin/member_managements/admin_member_edit_student_title :: titlePageContentTable"></div>
                     <!-- end Title page content-->
 
                     <!-- Table -->
-                    <div th:replace="pages/admin/member_managements/member_student_view :: table"></div>
+                    <div th:replace="pages/admin/member_managements/member_student_edit :: table"></div>
                     <!-- END Table -->
 
                     <!--end of table notification admin -->

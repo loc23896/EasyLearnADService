@@ -13,6 +13,7 @@ public interface ApiPath {
     String USER_CREATE = API + "/user/create";
     String USER_UPDATE = API + "/user/update";
     String USER_DELETE = API + "/user/delete";
+<<<<<<< Updated upstream
     //WebsiteVenue
     String WEBSITE_VENUE_GET_ALL = API + "/website-venue/get-all";
     String WEBSITE_VENUE_GET_ONE = API + "/website-venue/get-one";
@@ -76,6 +77,31 @@ public interface ApiPath {
     String COURSE_EDIT_DELETE = API + "/course-edit/delete";
 
 //END ADMIN_TRAINER_COURSE_EDIT
+=======
+    //trainersalarypaid
+    String TRAINER_SALARY_GET_ALL = API + "/trainersalary/get-all";
+    String TRAINER_SALARY_GET_ONE = API + "/trainersalary/get-one";
+    String TRAINER_SALARY_CREATE = API + "/trainersalary/create";
+    String TRAINER_SALARY_UPDATE = API + "/trainersalary/update";
+    String TRAINER_SALARY_DELETE = API + "/trainersalary/delete";
+
+    // managers
+    String MANAGER_GET_ALL = API +"/manager/get-all";
+    String MANAGER_GET_UUID = API + "/manager/get-uuid";
+    String MANAGER_CREATE = API + "/manager/create";
+    String MANAGER_UPDATE = API + "/manager/update";
+    String MANAGER_DELETE = API + "/manager/delete";
+    String MANAGER_SIGN_IN = API+"/manager/sign-in";
+
+    // student
+    String STUDENT_GET_ALL = API + "/student/get-all";
+    String STUDENT_GET_ID = API + "/student/get-by-id";
+    String STUDENT_CREATE = API + "/student/create";
+    String STUDENT_UPDATE = API + "/student/update";
+    String STUDENT_DELETE = API + "/student/delete";
+
+    // end
+>>>>>>> Stashed changes
 
 
 

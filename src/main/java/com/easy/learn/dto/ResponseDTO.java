@@ -19,5 +19,4 @@ public class ResponseDTO<T> implements Serializable {
     public Integer errorCode;
     public T data;
     public List<T> list;
-//    public Page<T> pages;
 }

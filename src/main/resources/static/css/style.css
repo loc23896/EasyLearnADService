@@ -9,14 +9,16 @@ body {
 }
 
 .auth-container {
-    max-width: 750px;
-    max-height: 600px;
+    max-width: 800px;
+    max-height: 1000px;
     margin: 0 auto;
     background: #fff;
     border-radius: 15px;
     box-shadow: 1px 2px 8px 8px #ccc3;
     display: flex;
-    margin-top: 4rem;
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+
     overflow: hidden;
 }
 
@@ -28,9 +30,11 @@ body {
 }
 .auth-image {
     overflow: hidden;
+    padding-top: 200px;
 }
 .auth-action-right {
     width: 320px;
+    background-color: #0a61a5;
 }
 .auth-action-left {
     flex: 2;
@@ -76,29 +80,29 @@ input.auth-form-input::placeholder {
 
 
 
-  input[type="checkbox"] {
+input[type="checkbox"] {
     display: none;
 }
-  label input[type="checkbox"] ~ i.fa.fa-square-o{
-      color: #fd5353;    display: inline;
-  }
-  label input[type="checkbox"] ~ i.fa.fa-check-square-o{
-      display: none;
-  }
-  label input[type="checkbox"]:checked ~ i.fa.fa-square-o{
-      display: none;
-  }
-  label input[type="checkbox"]:checked ~ i.fa.fa-check-square-o{
-      color: #fd5353;    display: inline;
-  }
-  label:hover input[type="checkbox"] ~ i.fa {
-  color: #fd5353;
-  }
-  
-  div[data-toggle="buttons"] label.active{
-      color: #fd5353;
-  }
-  
+label input[type="checkbox"] ~ i.fa.fa-square-o{
+    color: #fd5353;    display: inline;
+}
+label input[type="checkbox"] ~ i.fa.fa-check-square-o{
+    display: none;
+}
+label input[type="checkbox"]:checked ~ i.fa.fa-square-o{
+    display: none;
+}
+label input[type="checkbox"]:checked ~ i.fa.fa-check-square-o{
+    color: #fd5353;    display: inline;
+}
+label:hover input[type="checkbox"] ~ i.fa {
+    color: #fd5353;
+}
+
+div[data-toggle="buttons"] label.active{
+    color: #fd5353;
+}
+
 .auth-wrapper a {
     text-decoration: none;
     color: #fd5353;
@@ -195,10 +199,10 @@ p.auth-sgt {
 
 .input-icon {
     position: relative;
- }
+}
 
 .input-icon input {
-   padding-right: 4rem;
+    padding-right: 4rem;
 }
 
 .input-icon i {
