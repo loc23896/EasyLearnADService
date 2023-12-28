@@ -13,7 +13,7 @@ public interface ApiPath {
     String USER_CREATE = API + "/user/create";
     String USER_UPDATE = API + "/user/update";
     String USER_DELETE = API + "/user/delete";
-<<<<<<< Updated upstream
+
     //WebsiteVenue
     String WEBSITE_VENUE_GET_ALL = API + "/website-venue/get-all";
     String WEBSITE_VENUE_GET_ONE = API + "/website-venue/get-one";
@@ -77,7 +77,7 @@ public interface ApiPath {
     String COURSE_EDIT_DELETE = API + "/course-edit/delete";
 
 //END ADMIN_TRAINER_COURSE_EDIT
-=======
+
     //trainersalarypaid
     String TRAINER_SALARY_GET_ALL = API + "/trainersalary/get-all";
     String TRAINER_SALARY_GET_ONE = API + "/trainersalary/get-one";
@@ -101,7 +101,7 @@ public interface ApiPath {
     String STUDENT_DELETE = API + "/student/delete";
 
     // end
->>>>>>> Stashed changes
+
 
 
 
