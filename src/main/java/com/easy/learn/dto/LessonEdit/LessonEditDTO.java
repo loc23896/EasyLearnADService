@@ -1,4 +1,4 @@
-package com.easy.learn.dto.CourseEdit;
+package com.easy.learn.dto.LessonEdit;
 
 import com.easy.learn.Enum.Status;
 import com.easy.learn.dto.CourseEdit.CourseEdit;
@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseEditDTO extends ResponseDTO<CourseEdit> {
+public class LessonEditDTO extends ResponseDTO<LessonEdit> {
     private Long id;
-    private LocalDateTime lastUpdate;
-    private Status status;
+    private Long number;
     private String title;
-    private String description;
-    private String img;
+    private LocalDateTime lastUpdate;
+    private String video;
+    private String test;
 
 }

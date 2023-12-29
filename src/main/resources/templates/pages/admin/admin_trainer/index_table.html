@@ -42,23 +42,19 @@
                                 <small th:text="${list.lastUpdate}" class="text-body-secondary"></small>
                             </p>
 
-                            <a th:href="@{'/adminTrainer/edit/' + ${courseEditDTO.id}}" class="btn btn-primary btn-circle btn-sm">
+                            <a th:href="@{'/adminTrainer/edit/' + ${list.id}}" class="btn btn-primary btn-circle btn-sm">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
 
-                            <!-- In giá trị courseEditDTO để kiểm tra -->
-                            <p th:text="${courseEditDTO}" class="card-text"></p>
-
-
-                            <a th:href="@{/adminTrainer/info}" class="btn btn-info btn-circle btn-sm">
+                            <a th:href="@{'/adminTrainer/info/' + ${list.id}}" class="btn btn-info btn-circle btn-sm">
                                 <i class="fas fa-info-circle"></i>
                             </a>
 
-                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" th:data-target="'#exampleModalCenter'+${list.id}">
                                 <i class="fas fa-trash"></i>
                             </a>
 
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal fade" th:id="'exampleModalCenter' + ${list.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -72,7 +68,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <a href="#" class="btn btn-primary">Yes</a>
+                                            <a th:href="@{'/adminTrainer/delete/' + ${list.id}}" class="btn btn-primary">Yes</a>
                                         </div>
                                     </div>
                                 </div>
@@ -81,206 +77,6 @@
                     </td>
                 </tr>
 
-
-
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou02</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng2.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-
-
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou03</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng3.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou04</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng4.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou05</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng5.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou06</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng1.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou07</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng2.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou08</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng3.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou09</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng4.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou10</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng5.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou11</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng1.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou12</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng2.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou13</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng3.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou14</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng4.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card title</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td class="align-items-center">cou15</td>-->
-<!--                    <td class="col-3">-->
-<!--                        <img th:src="@{/img/course/eng5.png}" class="custom-img rounded-start" alt="...">-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Card English</h5>-->
-<!--                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-<!--                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-<!--                            <a class="btn btn-primary">Student has registered for the course</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
 
 
                 </tbody>
