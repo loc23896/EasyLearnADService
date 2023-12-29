@@ -75,8 +75,20 @@ public interface ApiPath {
     String COURSE_EDIT_CREATE = API + "/course-edit/create";
     String COURSE_EDIT_UPDATE = API + "/course-edit/update";
     String COURSE_EDIT_DELETE = API + "/course-edit/delete";
+    String COURSE_EDIT_SAVE_OR_UPDATE = API + "/course-edit/save-or-update";
 
 //END ADMIN_TRAINER_COURSE_EDIT
+
+
+    //ADMIN_TRAINER_LESSON_EDIT by LOC
+    String LESSON_EDIT_GET_ALL = API + "/lesson-edit/get-all";
+    String LESSON_EDIT_GET_ONE = API + "/lesson-edit/get-one";
+    String LESSON_EDIT_CREATE = API + "/lesson-edit/create";
+    String LESSON_EDIT_UPDATE = API + "/lesson-edit/update";
+    String LESSON_EDIT_DELETE = API + "/lesson-edit/delete";
+    String LESSON_EDIT_SAVE_OR_UPDATE = API+ "/lesson-edit/save-or-update";
+
+//END ADMIN_TRAINER_LESSON_EDIT
 
     //trainersalarypaid
     String TRAINER_SALARY_GET_ALL = API + "/trainersalary/get-all";
@@ -101,7 +113,6 @@ public interface ApiPath {
     String STUDENT_DELETE = API + "/student/delete";
 
     // end
-
 
 
 

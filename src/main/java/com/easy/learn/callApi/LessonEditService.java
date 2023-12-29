@@ -1,9 +1,10 @@
 package com.easy.learn.callApi;
 
 import com.easy.learn.consts.ApiPath;
-import com.easy.learn.dto.CourseEdit.CourseEdit;
-import com.easy.learn.dto.CourseEdit.CourseEditDTO;
-import lombok.extern.slf4j.Slf4j;
+import com.easy.learn.dto.LessonEdit.LessonEdit;
+import com.easy.learn.dto.LessonEdit.LessonEditDTO;
+import com.easy.learn.dto.LessonEdit.LessonEdit;
+import com.easy.learn.dto.LessonEdit.LessonEditDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,8 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Slf4j
-public class CourseEditService {
+public class LessonEditService {
     @Value("${api.host.url}")
     String apiHostUrl;
 
@@ -24,56 +24,56 @@ public class CourseEditService {
     RestTemplate restTemplate;
 
 
-    public List<CourseEdit> getAllCourseEdit() {
-        String url = apiHostUrl + ApiPath.COURSE_EDIT_GET_ALL;
+    public List<LessonEdit> getAllLessonEdit() {
+        String url = apiHostUrl + ApiPath.LESSON_EDIT_GET_ALL;
         HttpHeaders headers = new HttpHeaders();
 
 
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<CourseEditDTO> responseEntity = restTemplate.exchange(
+        ResponseEntity<LessonEditDTO> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<CourseEditDTO>() {});
+                new ParameterizedTypeReference<LessonEditDTO>() {});
 
-        CourseEditDTO courseEditDTO = responseEntity.getBody();
+        LessonEditDTO lessonEditDTO = responseEntity.getBody();
 
-        return  courseEditDTO.getList();
+        return  lessonEditDTO.getList();
     }
-    public CourseEdit getCourseEditById(Long id) {
-        String url = apiHostUrl + ApiPath.COURSE_EDIT_GET_ONE + "?id=" + id;
+    public LessonEdit getLessonEditById(Long id) {
+        String url = apiHostUrl + ApiPath.LESSON_EDIT_GET_ONE + "?id=" + id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<CourseEditDTO> responseEntity = restTemplate.exchange(
+        ResponseEntity<LessonEditDTO> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<CourseEditDTO>() {});
+                new ParameterizedTypeReference<LessonEditDTO>() {});
 
-        CourseEditDTO courseEditDTO = responseEntity.getBody();
+        LessonEditDTO lessonEditDTO = responseEntity.getBody();
 
-        return  courseEditDTO.getData();
+        return  lessonEditDTO.getData();
     }
-    public CourseEdit createCourseEdit(CourseEditDTO dto) {
-        String url = apiHostUrl + ApiPath.COURSE_EDIT_CREATE;
+    public LessonEdit createLessonEdit(LessonEditDTO dto) {
+        String url = apiHostUrl + ApiPath.LESSON_EDIT_CREATE;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<CourseEditDTO> entity = new HttpEntity<>(dto, headers);
+        HttpEntity<LessonEditDTO> entity = new HttpEntity<>(dto, headers);
 
-        ResponseEntity<CourseEdit> responseEntity = restTemplate.exchange(
+        ResponseEntity<LessonEdit> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 entity,
-                CourseEdit.class
+                LessonEdit.class
         );
 
         if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
@@ -83,20 +83,20 @@ public class CourseEditService {
         }
     }
 
-    public CourseEdit updateCourseEdit(CourseEditDTO dto) {
-        String url = apiHostUrl + ApiPath.COURSE_EDIT_UPDATE;
+    public LessonEdit updateLessonEdit(LessonEditDTO dto) {
+        String url = apiHostUrl + ApiPath.LESSON_EDIT_UPDATE;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<CourseEditDTO> entity = new HttpEntity<>(dto, headers);
+        HttpEntity<LessonEditDTO> entity = new HttpEntity<>(dto, headers);
 
-        ResponseEntity<CourseEdit> responseEntity = restTemplate.exchange(
+        ResponseEntity<LessonEdit> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.PUT,
                 entity,
-                CourseEdit.class
+                LessonEdit.class
         );
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -108,8 +108,8 @@ public class CourseEditService {
         }
     }
 
-    public boolean deleteCourseEdit(Long id) {
-        String url = apiHostUrl + ApiPath.COURSE_EDIT_DELETE + "?id=" + id;
+    public boolean deleteLessonEdit(Long id) {
+        String url = apiHostUrl + ApiPath.LESSON_EDIT_DELETE + "?id=" + id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -126,34 +126,27 @@ public class CourseEditService {
         return responseEntity.getStatusCode() == HttpStatus.OK;
     }
 
-    public CourseEdit saveOrUpdateCourseEdit(CourseEditDTO dto) {
-        String url = apiHostUrl + ApiPath.COURSE_EDIT_SAVE_OR_UPDATE;
+
+    public LessonEdit saveOrUpdateLessonEdit(LessonEditDTO dto) {
+        String url = apiHostUrl + ApiPath.LESSON_EDIT_SAVE_OR_UPDATE;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<CourseEditDTO> entity = new HttpEntity<>(dto, headers);
+        HttpEntity<LessonEditDTO> entity = new HttpEntity<>(dto, headers);
 
-        try {
-            ResponseEntity<CourseEdit> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.POST,
-                    entity,
-                    CourseEdit.class
-            );
+        ResponseEntity<LessonEdit> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                entity,
+                LessonEdit.class
+        );
 
-            if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                return responseEntity.getBody();
-            } else {
-                log.error("Error while saving or updating CourseEdit. Status code: {}, Response: {}",
-                        responseEntity.getStatusCode(), responseEntity.getBody());
-                throw new RuntimeException("Failed to save or update CourseEdit");
-            }
-        } catch (Exception e) {
-            log.error("Exception while saving or updating CourseEdit", e);
-            throw new RuntimeException("An error occurred while saving or updating CourseEdit", e);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return responseEntity.getBody();
+        } else {
+            return null;
         }
     }
-
 }
