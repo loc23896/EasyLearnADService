@@ -1,6 +1,7 @@
 package com.easy.learn.controller;
 
 import com.easy.learn.callApi.CourseEditService;
+<<<<<<< Updated upstream
 
 import com.easy.learn.callApi.LessonEditService;
 import com.easy.learn.consts.UrlPath;
@@ -8,6 +9,10 @@ import com.easy.learn.dto.CourseEdit.CourseEdit;
 import com.easy.learn.dto.CourseEdit.CourseEditDTO;
 
 import com.easy.learn.dto.LessonEdit.LessonEditDTO;
+=======
+import com.easy.learn.dto.CourseEdit.CourseEdit;
+import com.easy.learn.dto.CourseEdit.CourseEditDTO;
+>>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
