@@ -24,9 +24,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
+@RequestMapping(UrlPath.API_TRAINER_ADMIN)
 public class AdminTrainerController {
 
     @Autowired
@@ -37,91 +40,176 @@ public class AdminTrainerController {
         return new CourseEditDTO();
     }
 
-    @GetMapping(UrlPath.API_TRAINER_ADMIN)
+
+
+    @GetMapping("/index")
     public String adminTrainerIndex(Model model) {
         model.addAttribute("courseEditList", courseEditService.getAllCourseEdit());
-        return "pages/admin/admin_trainer/index";
+        return "pages/admin/admin_trainer/page_index/index";
     }
-
-
 
     //==================== start btn ADD COURSE form
-    @PostMapping(UrlPath.POST_FORM_COURSE_INDEX_TRAINER_ADMIN)
-    public String addCourseForm(
-            @ModelAttribute("courseEditDTO") CourseEditDTO courseEditDTO,
-            @RequestParam("imgCourseEdit") MultipartFile imgCourseEdit) {
-            try {
-                Path path = Paths.get("src/main/resources/static/img/course");
 
-                if (!Files.exists(path)) {
-                    Files.createDirectories(path);
-                }
-                InputStream inputStream = imgCourseEdit.getInputStream();
-                Files.copy(inputStream, path.resolve(imgCourseEdit.getOriginalFilename()),
-                        StandardCopyOption.REPLACE_EXISTING);
+    @PostMapping("/save")
+    public String saveCourse(@ModelAttribute("courseEditDTO") CourseEditDTO courseEditDTO,
+                             @RequestParam("imgCourseEdit") MultipartFile imgCourseEdit) {
+        try {
+            Path path = Paths.get("src/main/resources/static/img/course");
 
-                courseEditDTO.setImg(imgCourseEdit.getOriginalFilename().toLowerCase());
-                courseEditDTO.setLastUpdate(LocalDateTime.now());
-
-                courseEditService.saveOrUpdateCourseEdit(courseEditDTO);
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
             }
 
-        return "redirect:"+UrlPath.API_TRAINER_ADMIN;
-    }
+            InputStream inputStream = imgCourseEdit.getInputStream();
+            Files.copy(inputStream, path.resolve(imgCourseEdit.getOriginalFilename()),
+                    StandardCopyOption.REPLACE_EXISTING);
+            courseEditDTO.setImg(imgCourseEdit.getOriginalFilename().toLowerCase());
 
-    //==================== end btn ADD COURSE form
-
-
-    @GetMapping(UrlPath.GET_UPDATE_COURSE_ID_INDEX_TRAINER_ADMIN)
-    public String adminTrainerUpdate(@PathVariable Long id, Model model) {
-        CourseEdit updateCourse = courseEditService.getCourseEditById(id);
-        model.addAttribute("updateCourse",updateCourse);
-
-        return UrlPath.GET_PAGE_UPDATE;
-    }
-
-    @GetMapping(UrlPath.GET_EDIT_COURSE_ID_INDEX_TRAINER_ADMIN)
-    public String adminTrainerEdit(@PathVariable Long id, Model model) {
-        if(id == null) {
-            return "/pages/404.html";
-        } else {
-            CourseEdit courseEdit = courseEditService.getCourseEditById(id);
-            if(courseEdit == null) {
-                return "/pages/404.html";
-            }
-            model.addAttribute("courseEdit", courseEdit);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return UrlPath.GET_PAGE_EDIT;
-    }
 
-    @GetMapping(UrlPath.GET_INFO_COURSE_ID_INDEX_TRAINER_ADMIN)
-    public String adminTrainerInfo (@PathVariable Long id, Model model){
-        if(id == null) {
-            return "/pages/404.html";
-        } else {
-            CourseEdit courseEdit = courseEditService.getCourseEditById(id);
-            if(courseEdit == null) {
-                return "/pages/404.html";
-            }
-            model.addAttribute("courseEditInfo", courseEdit);
+        // Save the course
+        if(courseEditDTO.getId()==null){
+            courseEditService.createCourseEdit(courseEditDTO);
+        }else{
+            courseEditService.updateCourseEdit(courseEditDTO);
         }
-        return UrlPath.GET_PAGE_INFO;
+
+        return "redirect:/adminTrainer/index";
     }
 
-    //==================== start delete course by id form index trainer admin page
-    @GetMapping(UrlPath.GET_DELETE_COURSE_ID_INDEX_TRAINER_ADMIN)
-    public String deleteCourseEdit(@PathVariable Long id){
+    @GetMapping("/update/{id}")
+    public String updateCourse(@PathVariable Long id, Model model) {
+
+        CourseEdit courseEdit = courseEditService.getCourseEditById(id);
+
+        model.addAttribute("courseUpdate", courseEdit);
+
+        return "pages/admin/admin_trainer/page_update_course/page_updateCourse";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editCourse(@PathVariable Long id, Model model) {
+
+        CourseEdit courseEdit = courseEditService.getCourseEditById(id);
+
+        model.addAttribute("courseEdit", courseEdit);
+
+        return "pages/admin/admin_trainer/page_edit_course/page_edit";
+    }
+
+
+    @GetMapping("/info/{id}")
+    public String infoCourse(@PathVariable Long id, Model model) {
+
+        CourseEdit courseEdit = courseEditService.getCourseEditById(id);
+
+        model.addAttribute("courseEditInfo", courseEdit);
+
+        return "pages/admin/admin_trainer/page_info_course/page_info";
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteEmploy(@PathVariable Long id){
         courseEditService.deleteCourseEdit(id);
-        return "redirect:"+UrlPath.API_TRAINER_ADMIN;
+        return "redirect:/adminTrainer/index";
     }
-    //====================== end delete course by id form index trainer admin page
-
-
-
 
 
 }
+
+
+
+
+
+
+//
+//    //==================== end btn ADD COURSE form
+//
+//
+//    @GetMapping(UrlPath.GET_UPDATE_COURSE_ID_INDEX_TRAINER_ADMIN)
+//    public String adminTrainerUpdate(@PathVariable Long id, Model model) {
+//        CourseEdit updateCourse = courseEditService.getCourseEditById(id);
+//        model.addAttribute("updateCourse",updateCourse);
+//
+//        return UrlPath.GET_PAGE_UPDATE;
+//    }
+//
+//
+//    @PostMapping(UrlPath.POST_UPDATE_COURSE_TRAINER_ADMIN)
+//    public String updateCourseForm(
+//            @ModelAttribute("updateCourseEditDTO") CourseEditDTO courseEditDTO ,
+//            @RequestParam("imgCourseEdit") MultipartFile imgCourseEdit) {
+//
+//            try {
+//                Path path = Paths.get("src/main/resources/static/img/course");
+//                InputStream inputStream = imgCourseEdit.getInputStream();
+//                Files.copy(inputStream, path.resolve(imgCourseEdit.getOriginalFilename()),
+//                        StandardCopyOption.REPLACE_EXISTING);
+//
+//                courseEditDTO.setImg(imgCourseEdit.getOriginalFilename().toLowerCase());
+//                courseEditDTO.setLastUpdate(LocalDateTime.now());
+//
+//                courseEditService.updateCourseEdit(courseEditDTO);
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        return "redirect:"+UrlPath.API_TRAINER_ADMIN;
+//    }
+//
+//
+//    //=========================================================UPDATE COURSE=================================
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//    @GetMapping(UrlPath.GET_EDIT_COURSE_ID_INDEX_TRAINER_ADMIN)
+//    public String adminTrainerEdit(@PathVariable Long id, Model model) {
+//        if(id == null) {
+//            return "/pages/404.html";
+//        } else {
+//            CourseEdit courseEdit = courseEditService.getCourseEditById(id);
+//            if(courseEdit == null) {
+//                return "/pages/404.html";
+//            }
+//            model.addAttribute("courseEdit", courseEdit);
+//        }
+//        return UrlPath.GET_PAGE_EDIT;
+//    }
+//
+//    @GetMapping(UrlPath.GET_INFO_COURSE_ID_INDEX_TRAINER_ADMIN)
+//    public String adminTrainerInfo (@PathVariable Long id, Model model){
+//        if(id == null) {
+//            return "/pages/404.html";
+//        } else {
+//            CourseEdit courseEdit = courseEditService.getCourseEditById(id);
+//            if(courseEdit == null) {
+//                return "/pages/404.html";
+//            }
+//            model.addAttribute("courseEditInfo", courseEdit);
+//        }
+//        return UrlPath.GET_PAGE_INFO;
+//    }
+//
+//    //==================== start delete course by id form index trainer admin page
+//    @GetMapping(UrlPath.GET_DELETE_COURSE_ID_INDEX_TRAINER_ADMIN)
+//    public String deleteCourseEdit(@PathVariable Long id){
+//        courseEditService.deleteCourseEdit(id);
+//        return "redirect:"+UrlPath.API_TRAINER_ADMIN;
+//    }
+//    //====================== end delete course by id form index trainer admin page
+//
+//
+//
+//
+//
+//}

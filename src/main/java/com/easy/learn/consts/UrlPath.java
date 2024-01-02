@@ -15,7 +15,6 @@ public interface UrlPath {
     String GET_UPDATE_COURSE_ID_INDEX_TRAINER_ADMIN =API_TRAINER_ADMIN+"/update/{id}";
     String GET_INFO_COURSE_ID_INDEX_TRAINER_ADMIN =API_TRAINER_ADMIN+"/info/{id}";
     String GET_DELETE_COURSE_ID_INDEX_TRAINER_ADMIN =API_TRAINER_ADMIN+"/delete/{id}";
-
     String GET_CHANGE_EDIT_COURSE_ID_INDEX_TRAINER_ADMIN =API_TRAINER_ADMIN+"/change/{id}";
 
 //    ==================================== end API Trainer addmin by loc ==========================================
