@@ -36,7 +36,15 @@
                     </td>
                     <td>
                         <div class="card-body">
-                            <h3 th:text="${list.title}" class="card-title"></h3>
+                            <div class="row d-flex justify-content-between">
+                                <h3 th:text="${list.title}" class="card-title"></h3>
+
+                                <a th:href="@{'/adminTrainer/update/' + ${list.id}}" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </a>
+
+                            </div>
+
                             <p th:text="${list.description}" class="card-text"></p>
                             <p class="card-text">
                                 <small th:text="${list.lastUpdate}" class="text-body-secondary"></small>
@@ -50,35 +58,14 @@
                                 <i class="fas fa-info-circle"></i>
                             </a>
 
-                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" th:data-target="'#exampleModalCenter'+${list.id}">
+                            <a class="btn btn-danger btn-circle btn-sm" th:href="@{'/adminTrainer/delete/' + ${list.id}}"
+                               onclick="return confirm('Are you sure you want to delete this employee?')">
                                 <i class="fas fa-trash"></i>
                             </a>
 
-                            <div class="modal fade" th:id="'exampleModalCenter' + ${list.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Please confirm</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Do you want to delete Course?.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <a th:href="@{'/adminTrainer/delete/' + ${list.id}}" class="btn btn-primary">Yes</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </td>
                 </tr>
-
-
-
                 </tbody>
             </table>
         </div>

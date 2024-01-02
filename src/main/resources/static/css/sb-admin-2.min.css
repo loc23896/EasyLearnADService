@@ -52,6 +52,10 @@
     height:205px;
 }
 
+.error{
+    color : red;
+}
+
 
 html {
   font-family: sans-serif;

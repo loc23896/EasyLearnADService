@@ -20,4 +20,5 @@ public class LessonEditDTO extends ResponseDTO<LessonEdit> {
     private String video;
     private String test;
 
+//    private CourseEdit courseEdit;
 }

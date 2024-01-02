@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<div th:fragment="titlePageContentTable">
+<div th:fragment="titlePageContent">
     <div class="row d-flex justify-content-between">
         <div class="col-xl-3 col-lg-3">
             <div class="row d-flex flex-column mx-0">
@@ -52,20 +52,18 @@
                 </div>
                 <div class="col-md-8">
                     <div class="table card-body py-3 my-0">
+                        <input type="hidden" th:field="*{courseEdit.id}"/>
                         <h3 th:text="${courseEdit.title}" class="card-title"></h3>
                         <p th:text="${courseEdit.description}" class="card-text"></p>
                         <p class="card-text"><small th:text="${courseEdit.lastUpdate}" class="text-body-secondary"></small></p>
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" >Change Course</a>
-                        <a class="btn btn-success">Save</a>
                     </div>
 <!--                    Start modal change course -->
-
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade" th:id="'exampleModalCenter' + ${courseEdit.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
 
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLong">Change info course form</h5>
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Change info course form</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -85,7 +83,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a th:href="@{/adminTrainer/info}" class="btn btn-primary">Yes</a>
+                                    <a  class="btn btn-primary">Yes</a>
                                 </div>
                             </div>
                         </div>

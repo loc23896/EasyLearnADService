@@ -19,7 +19,7 @@ public class TrainerSalaryPaidController {
 
     @GetMapping("/list")
     public String getAllTrainerSalaryPaid(Model model) {
-        model.addAttribute("trainerSalaryPaidList", trainerSalaryService.getAllTrainerSalaryPaid());
+        model.addAttribute("listTrainerSalary", trainerSalaryService.getAllTrainerSalaryPaid());
         model.addAttribute("trainerSalaryPaidDTO", new TrainerSalaryPaidDTO()); // For form binding
         return "/pages/finance_management/list";
     }
@@ -49,9 +49,10 @@ public class TrainerSalaryPaidController {
     public String editTrainerSalaryPaid(@PathVariable Long id, Model model) {
         TrainerSalaryPaid trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
-        List<TrainerSalaryPaid> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
-        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);
+//        List<TrainerSalaryPaid> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
+//        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);
         return "/pages/finance_management/edit";
+
     }
 
     @GetMapping("/delete/{id}")
