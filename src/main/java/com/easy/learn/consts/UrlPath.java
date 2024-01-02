@@ -3,6 +3,7 @@ package com.easy.learn.consts;
 public interface UrlPath {
 
     String GET_ALL_USER = "/salarypaids";
+    String TRAINER_SALARY_PAID_SUMMARY = "/trainersalarysummary";
 
 
 //    ==================================== start API Trainer addmin by loc ==========================================

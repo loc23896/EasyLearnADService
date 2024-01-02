@@ -1,21 +1,18 @@
 package com.easy.learn.controller;
 
-import com.easy.learn.callApi.TrainerSalaryService;
-import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaid;
+import com.easy.learn.callApi.TrainerSalaryPaidService;
 import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/trainersalary")
 public class TrainerSalaryPaidController {
-
     @Autowired
-    private TrainerSalaryService trainerSalaryService;
+    private TrainerSalaryPaidService trainerSalaryPaidService;
 
     @GetMapping("/list")
     public String getAllTrainerSalaryPaid(Model model) {
@@ -24,42 +21,53 @@ public class TrainerSalaryPaidController {
         return "/pages/finance_management/list";
     }
 
-    @PostMapping("/save")
-    public String saveTrainerSalaryPaid(@ModelAttribute("trainerSalaryPaidDTO") TrainerSalaryPaidDTO trainerSalaryPaidDTO ) {
-
-        if (trainerSalaryPaidDTO.getId() == null) {
-            trainerSalaryService.createTrainerSalaryPaid(trainerSalaryPaidDTO);
-        } else {
-
-            trainerSalaryService.updateTrainerSalaryPaid(trainerSalaryPaidDTO);
-        }
-
-        return "redirect:/trainersalary/list";
+    // Read: Display one salary
+    @GetMapping("/{id}")
+    public String showTrainerSalary(@PathVariable Long id, Model model) {
+        model.addAttribute("salary", trainerSalaryPaidService.getTrainerSalaryPaidById(id));
+        return "pages/admin/finance_managements/trainerSalaryDetail";
     }
 
-    @GetMapping("/view/{id}")
-    public String viewTrainerSalaryPaid(@PathVariable Long id, Model model) {
-        TrainerSalaryPaid trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
-        model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
-
-        return "/pages/finance_management/view";
+    // Create: Show form to create a new salary
+    @GetMapping("/new")
+    public String showNewForm(Model model) {
+        model.addAttribute("salary", new TrainerSalaryPaidDTO());
+        return "trainerSalaryForm";
     }
 
+    // Create: Process the form
+    @PostMapping
+    public String saveTrainerSalary(@ModelAttribute TrainerSalaryPaidDTO salary, RedirectAttributes redirectAttributes) {
+        trainerSalaryPaidService.createTrainerSalaryPaid(salary);
+        redirectAttributes.addFlashAttribute("message", "Salary added successfully!");
+        return "redirect:pages/admin/finance_managements/trainer-salary";
+    }
+
+    // Update: Show form to edit a salary
     @GetMapping("/edit/{id}")
+
     public String editTrainerSalaryPaid(@PathVariable Long id, Model model) {
         TrainerSalaryPaid trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
 //        List<TrainerSalaryPaid> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
 //        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);
         return "/pages/finance_management/edit";
-
     }
 
+    // Update: Process the edit form
+    @PostMapping("/{id}")
+    public String updateTrainerSalary(@PathVariable Long id, @ModelAttribute TrainerSalaryPaidDTO salary, RedirectAttributes redirectAttributes) {
+        trainerSalaryPaidService.updateTrainerSalaryPaid(salary);
+        redirectAttributes.addFlashAttribute("message", "Salary updated successfully!");
+        return "redirect:pages/admin/finance_managements/trainer-salary";
+    }
+
+    // Delete: Remove a salary
     @GetMapping("/delete/{id}")
-    public String deleteTrainerSalaryPaid(@PathVariable Long id) {
-        trainerSalaryService.deleteTrainerSalaryPaid(id);
-        return "redirect:/trainersalary/list";
+    public String deleteTrainerSalary(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        trainerSalaryPaidService.deleteTrainerSalaryPaid(id);
+        redirectAttributes.addFlashAttribute("message", "Salary deleted successfully!");
+        return "redirect:pages/admin/finance_managements/trainer-salary";
     }
-
-
 }
+

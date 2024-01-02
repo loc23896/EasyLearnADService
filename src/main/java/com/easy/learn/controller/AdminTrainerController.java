@@ -8,7 +8,7 @@ import com.easy.learn.dto.CourseEdit.CourseEdit;
 import com.easy.learn.dto.CourseEdit.CourseEditDTO;
 
 import com.easy.learn.dto.LessonEdit.LessonEditDTO;
-import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
