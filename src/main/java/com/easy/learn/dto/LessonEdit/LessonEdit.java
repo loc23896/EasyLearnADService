@@ -19,4 +19,6 @@ public class LessonEdit implements Serializable {
     private LocalDateTime lastUpdate;
     private String video;
     private String test;
+
+//    private CourseEdit courseEdit;
 }

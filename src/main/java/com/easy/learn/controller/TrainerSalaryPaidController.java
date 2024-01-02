@@ -14,10 +14,11 @@ public class TrainerSalaryPaidController {
     @Autowired
     private TrainerSalaryPaidService trainerSalaryPaidService;
 
-    @GetMapping
-    public String listTrainerSalaries(Model model) {
-        model.addAttribute("salaries", trainerSalaryPaidService.getAllTrainerSalaryPaid());
-        return "pages/admin/finance_managements/trainerSalariesList";
+    @GetMapping("/list")
+    public String getAllTrainerSalaryPaid(Model model) {
+        model.addAttribute("listTrainerSalary", trainerSalaryService.getAllTrainerSalaryPaid());
+        model.addAttribute("trainerSalaryPaidDTO", new TrainerSalaryPaidDTO()); // For form binding
+        return "/pages/finance_management/list";
     }
 
     // Read: Display one salary
@@ -44,9 +45,13 @@ public class TrainerSalaryPaidController {
 
     // Update: Show form to edit a salary
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("salary", trainerSalaryPaidService.getTrainerSalaryPaidById(id));
-        return "trainerSalaryForm";
+
+    public String editTrainerSalaryPaid(@PathVariable Long id, Model model) {
+        TrainerSalaryPaid trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
+        model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
+//        List<TrainerSalaryPaid> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
+//        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);
+        return "/pages/finance_management/edit";
     }
 
     // Update: Process the edit form
