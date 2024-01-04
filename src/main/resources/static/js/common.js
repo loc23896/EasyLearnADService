@@ -4,10 +4,10 @@ function checkNull(){
     let email = document.getElementById("email").value;
     let address = document.getElementById("address").value;
     let phone = document.getElementById("phone").value;
-    let userName = document.getElementById("userName").value;
+    let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     let managementType = document.getElementById("managementType").value;
-    if (firstName === '' || lastname === '' || email === '' || address === ''|| phone === '' || userName === ''|| password === '') {
+    if (firstName === '' || lastname === '' || email === '' || address === ''|| phone === '' || username === ''|| password === '') {
         alert("Vui lòng điền đầy đủ thông tin");
         return false;
     }

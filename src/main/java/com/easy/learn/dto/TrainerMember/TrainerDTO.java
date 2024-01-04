@@ -1,22 +1,21 @@
-package com.easy.learn.dto.Manager;
+package com.easy.learn.dto.TrainerMember;
 
 import com.easy.learn.dto.ResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManagerDTO extends ResponseDTO<Manager> {
+public class TrainerDTO extends ResponseDTO<Trainer> {
     private Long id;
     private String uuid;
-    private String firstname;
-    private String lastname;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String address;
     private String phone;
-    private String password;
-    private String managementtype;
+    private Date dateCreated;
+    private String status;
 }

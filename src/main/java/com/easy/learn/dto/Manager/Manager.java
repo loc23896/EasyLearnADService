@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 public class Manager {
     private Long id;
     private String uuid;
-    private String firstName;
-    private String lastName;
-    private String userName;
+    private String firstname;
+    private String lastname;
+    private String username;
     private String email;
     private String address;
     private String phone;
     private String password;
-    private String managementType;
+    private String managementtype;
 }

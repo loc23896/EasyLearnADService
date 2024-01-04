@@ -99,7 +99,7 @@ public interface ApiPath {
 
     // managers
     String MANAGER_GET_ALL = API +"/manager/get-all";
-    String MANAGER_GET_UUID = API + "/manager/get-uuid";
+    String MANAGER_GET_ID = API + "/manager/get-id";
     String MANAGER_CREATE = API + "/manager/create";
     String MANAGER_UPDATE = API + "/manager/update";
     String MANAGER_DELETE = API + "/manager/delete";
@@ -111,6 +111,13 @@ public interface ApiPath {
     String STUDENT_CREATE = API + "/student/create";
     String STUDENT_UPDATE = API + "/student/update";
     String STUDENT_DELETE = API + "/student/delete";
+
+    // trainer
+    String TRAINER_GET_ALL = API + "/trainer/get-all";
+    String TRAINER_GET_ID = API + "/trainer/get-id";
+    String TRAINER_CREATE = API + "/trainer/create";
+    String TRAINER_UPDATE = API + "/trainer/update";
+    String TRAINER_DELETE = API + "/trainer/delete";
 
     // end
 

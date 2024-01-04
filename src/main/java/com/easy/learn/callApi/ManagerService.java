@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ManagerService {
@@ -32,14 +34,16 @@ public class ManagerService {
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<ManagerDTO>() {}
+                new ParameterizedTypeReference<ManagerDTO>() {
+                }
         );
         ManagerDTO managerDTO = responseEntity.getBody();
 
         return managerDTO.getList();
     }
-    public Manager getByUuid(String uuid) {
-        String url = apiHostUrl + ApiPath.MANAGER_GET_UUID + "?uuid=" + uuid;
+
+    public Manager getById(String id) {
+        String url = apiHostUrl + ApiPath.MANAGER_GET_ID + "?id=" + id;
         HttpHeaders headers = new HttpHeaders();
 
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -56,6 +60,7 @@ public class ManagerService {
 
         return managerDTO.getData();
     }
+
     public Manager create(ManagerDTO managerDTO) {
         String url = apiHostUrl + ApiPath.MANAGER_CREATE;
         HttpHeaders headers = new HttpHeaders();
@@ -72,12 +77,13 @@ public class ManagerService {
                 Manager.class
         );
 
-        if (responseEntity.getStatusCode() == HttpStatus.CREATED){
+        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
             return responseEntity.getBody();
         } else {
             return null;
         }
     }
+
     public Manager update(ManagerDTO managerDTO) {
         String url = apiHostUrl + ApiPath.MANAGER_UPDATE;
         HttpHeaders headers = new HttpHeaders();
@@ -93,14 +99,15 @@ public class ManagerService {
                 entity,
                 Manager.class
         );
-        if(responseEntity.getStatusCode() == HttpStatus.OK){
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();
         } else {
             return null;
         }
     }
+
     public boolean delete(String uuid) {
-        String url = apiHostUrl + ApiPath.MANAGER_DELETE +"?uuid" + uuid;
+        String url = apiHostUrl + ApiPath.MANAGER_DELETE + "?uuid" + uuid;
         HttpHeaders headers = new HttpHeaders();
 
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -114,24 +121,28 @@ public class ManagerService {
         );
         return responseEntity.getStatusCode() == HttpStatus.OK;
     }
-    public Manager login(String username, String password) {
+
+    public ManagerDTO signIn(String username, String password) {
         String url = apiHostUrl + ApiPath.MANAGER_SIGN_IN;
         HttpHeaders headers = new HttpHeaders();
 
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ManagerDTO> entity = new HttpEntity<>(headers);
+        // Create a request body with the username and password
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("username", username);
+        requestBody.put("password", password);
+
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
 
         ResponseEntity<ManagerDTO> responseEntity = restTemplate.exchange(
                 url,
-                HttpMethod.GET,
+                HttpMethod.POST,
                 entity,
-                new ParameterizedTypeReference<ManagerDTO>() {
-                }
+                ManagerDTO.class
         );
-        ManagerDTO managerDTO = responseEntity.getBody();
-
-        return managerDTO.getData();
+        return responseEntity.getBody();
     }
+
 }
