@@ -13,35 +13,9 @@
 
     <!-- End of Sidebar -->
 
-<<<<<<< Updated upstream
     <!-- List Section -->
-    <h3 class="mt-4">List</h3>
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Trainer Salary Paid ID</th>
-            <th>Week Number</th>
-            <th>Month Number</th>
-            <th>Year Number</th>
-            <th>Total Number</th>
-            <th>Actions</th>
-        </tr>
-        <tr th:each="list : ${listTrainerSalary}">
-            <td th:text="${list.id}"></td>
-            <td th:text="${list.trainerSalaryPaidId}"></td>
-            <td th:text="${list.weekNumber}"></td>
-            <td th:text="${list.monthNumber}"></td>
-            <td th:text="${list.yearNumber}"></td>
-            <td th:text="${list.totalNumber}"></td>
-            <td>
-                <a class="btn btn-info" th:href="@{'/trainersalary/view/' + ${list.id}}">View</a>
-                <a class="btn btn-warning" th:href="@{'/trainersalary/edit/' + ${list.id}}">Edit</a>
-                <a class="btn btn-danger" th:href="@{'/trainersalary/delete/' + ${list.id}}">Delete</a>
-=======
     <!-- Content Wrapper -->
     <div class="container">
->>>>>>> Stashed changes
-
         <h2 class="mt-4">Trainer Salary Records</h2>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTrainerSalaryModal">
             Create New Trainer Salary
