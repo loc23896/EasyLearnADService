@@ -1,6 +1,7 @@
 package com.easy.learn.controller;
 
 import com.easy.learn.callApi.TrainerSalaryPaidService;
+import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaid;
 import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ public class TrainerSalaryPaidController {
 
     @GetMapping("/list")
     public String getAllTrainerSalaryPaid(Model model) {
-        model.addAttribute("listTrainerSalary", trainerSalaryService.getAllTrainerSalaryPaid());
+        model.addAttribute("listTrainerSalary", trainerSalaryPaidService.getAllTrainerSalaryPaid());
         model.addAttribute("trainerSalaryPaidDTO", new TrainerSalaryPaidDTO()); // For form binding
         return "/pages/finance_management/list";
     }
@@ -45,9 +46,8 @@ public class TrainerSalaryPaidController {
 
     // Update: Show form to edit a salary
     @GetMapping("/edit/{id}")
-
     public String editTrainerSalaryPaid(@PathVariable Long id, Model model) {
-        TrainerSalaryPaid trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
+        TrainerSalaryPaid trainerSalaryPaid = trainerSalaryPaidService.getTrainerSalaryPaidById(id);
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
 //        List<TrainerSalaryPaid> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
 //        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);

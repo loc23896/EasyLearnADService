@@ -24,14 +24,17 @@
           <!-- End of Topbar -->
 
           <!--Navbar-->
-          <div th:replace="pages/admin/admin_trainer/index_navbar.html :: navbar"></div>
+          <div th:replace="pages/admin/admin_trainer/page_update_course/updateCourse_navbar.html :: navbar"></div>
           <!--End of navbar -->
 
           <!-- Begin Page Content -->
           <div class="container-fluid pt-2">
-              <div th:replace="pages/admin/admin_trainer/index_titlePageContent :: titlePageContent"></div>
-<!--            <div th:replace="pages/fragment/pageContent :: pageContent"></div>-->
-            <div th:replace="pages/admin/admin_trainer/index_table :: table"></div>
+
+            <div th:replace="pages/admin/admin_trainer/page_update_course/titlePageContent_updateCourse.html :: titlePageContent"></div>
+
+            <div th:replace="pages/admin/admin_trainer/page_update_course/table_updateCourse.html :: table"></div>
+
+
 
         </div>
           <!-- END Page Content -->
