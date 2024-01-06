@@ -1,7 +1,7 @@
 function checkNull1(){
-    let userName = document.getElementById("username").value;
+    let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-    if (userName === ''|| password === '') {
+    if (username === ''|| password === '') {
         alert("Vui lòng điền đầy đủ thông tin");
         return false;
     }

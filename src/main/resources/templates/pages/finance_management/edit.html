@@ -15,7 +15,7 @@
 
     <h2 class="mt-4">Edit Trainer Salary</h2>
 
-    <form th:action="@{'/trainersalary/save'}" th:object="${trainerSalaryPaidDTO}" method="post">
+    <form th:action="@{'/trainersalarysummary/save'}" th:object="${trainerSalaryPaidDTO}" method="post">
         <input type="hidden" th:field="*{id}"/>
         <label class="form-label">Trainer Salary Paid ID: <input class="form-control" type="text" th:field="*{trainerSalaryPaidId}"/></label><br>
         <label class="form-label">Week Number: <input class="form-control" type="text" th:field="*{weekNumber}"/></label><br>

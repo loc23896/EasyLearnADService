@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<div th:replace="pages/fragment/head :: head"></div>
 
-    <title>Trainer Salary Records</title>
-</head>
-<body>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
-<div class="container">
+    <!-- Sidebar -->
+    <div th:replace="pages/fragment/sidebar :: sidebar"></div>
 
-    <h2 class="mt-4">Trainer Salary Records</h2>
+    <!-- End of Sidebar -->
 
+<<<<<<< Updated upstream
     <!-- List Section -->
     <h3 class="mt-4">List</h3>
     <table class="table">
@@ -38,28 +37,113 @@
                 <a class="btn btn-info" th:href="@{'/trainersalary/view/' + ${list.id}}">View</a>
                 <a class="btn btn-warning" th:href="@{'/trainersalary/edit/' + ${list.id}}">Edit</a>
                 <a class="btn btn-danger" th:href="@{'/trainersalary/delete/' + ${list.id}}">Delete</a>
+=======
+    <!-- Content Wrapper -->
+    <div class="container">
+>>>>>>> Stashed changes
 
-            </td>
-        </tr>
-    </table>
+        <h2 class="mt-4">Trainer Salary Records</h2>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTrainerSalaryModal">
+            Create New Trainer Salary
+        </button>
+        <!-- Create Section -->
+        <div class="modal fade" id="createTrainerSalaryModal" tabindex="-1" aria-labelledby="createTrainerSalaryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createTrainerSalaryModalLabel">Create Trainer Salary</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/trainersalarysummary/save}" th:object="${trainerSalaryPaidDTO}" method="POST">
+                        <div class="modal-body">
+                            <input type="hidden" th:field="*{id}"/>
+                            <label class="form-label">Trainer Salary Paid ID: <input class="form-control" type="text" th:field="*{trainerSalaryPaidId}"/></label><br>
+                            <label class="form-label">Month Number: <input class="form-control" type="text" th:field="*{monthNumber}"/></label><br>
+                            <label class="form-label">Year Number: <input class="form-control" type="text" th:field="*{yearNumber}"/></label><br>
+                            <label class="form-label">Total Number: <input class="form-control" type="text" th:field="*{totalNumber}"/></label><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- List Section -->
+        <h3 class="mt-4">List</h3>
+        <div class="card shadow mb-4" th:fragment="table">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Table admin
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Trainer Salary Paid ID</th>
+                            <th>Month Number</th>
+                            <th>Year Number</th>
+                            <th>Total Number</th>
+                            <th>Actions</th>
+                        </tr></thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Trainer Salary Paid ID</th>
+                            <th>Month Number</th>
+                            <th>Year Number</th>
+                            <th>Total Number</th>
+                            <th>Actions</th>
 
-    <!-- Create Section -->
-    <h3 class="mt-4">Create</h3>
-    <form th:action="@{/trainersalary/save}" th:object="${trainerSalaryPaidDTO}" method="POST">
-        <input type="hidden" th:field="*{id}"/>
-        <label class="form-label">Trainer Salary Paid ID: <input class="form-control" type="text" th:field="*{trainerSalaryPaidId}"/></label><br>
-        <label class="form-label">Week Number: <input class="form-control" type="text" th:field="*{weekNumber}"/></label><br>
-        <label class="form-label">Month Number: <input class="form-control" type="text" th:field="*{monthNumber}"/></label><br>
-        <label class="form-label">Year Number: <input class="form-control" type="text" th:field="*{yearNumber}"/></label><br>
-        <label class="form-label">Total Number: <input class="form-control" type="text" th:field="*{totalNumber}"/></label><br>
-        <button class="btn btn-primary" type="submit">Save</button>
-    </form>
+                        </tr>
+                        </tfoot>
+                        <tr th:each="trainerSalaryPaidDTO : ${trainerSalaryPaidList}">
+                            <td th:text="${trainerSalaryPaidDTO.id}"></td>
+                            <td th:text="${trainerSalaryPaidDTO.trainerSalaryPaidId}"></td>
+                            <td th:text="${trainerSalaryPaidDTO.monthNumber}"></td>
+                            <td th:text="${trainerSalaryPaidDTO.yearNumber}"></td>
+                            <td th:text="${trainerSalaryPaidDTO.totalNumber}"></td>
+                            <td>
+                                <a class="btn btn-info" th:href="@{'/trainersalarysummary/edit/' + ${trainerSalaryPaidDTO.id}}">Chỉnh Sửa</a>
+                                <a class="btn btn-danger" th:href="@{'/trainersalarysummary/delete/' + ${trainerSalaryPaidDTO.id}}">Delete</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- END Table -->
 
-</div>
+                    <!--end of table notification admin -->
 
-<!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+                </div>
+                <!--end of table notification admin -->
 
+                <!-- Footer -->
+                <div th:replace="pages/fragment/footer :: footer"></div>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div th:replace="pages/fragment/modal_logout :: modal_logout"></div>
+
+        <!-- Bootstrap core JavaScript-->
+        <div th:replace="pages/fragment/script :: script"></div>
 </body>
 </html>

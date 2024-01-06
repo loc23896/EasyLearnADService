@@ -34,7 +34,7 @@ public class TrainerSalaryPaidSummaryController {
             trainerSalaryService.updateTrainerSalaryPaid(trainerSalaryPaidDTO);
         }
 
-        return "redirect:/trainersalary/list";
+        return "redirect:/trainersalarysummary/list";
     }
 
     @GetMapping("/view/{id}")
@@ -46,18 +46,19 @@ public class TrainerSalaryPaidSummaryController {
     }
 
     @GetMapping("/edit/{id}")
+    //@ResponseBody
     public String editTrainerSalaryPaid(@PathVariable Long id, Model model) {
         TrainerSalaryPaidSummary trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
-        List<TrainerSalaryPaidSummary> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
-        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);
-        return "/pages/finance_management/edit";
+        return "/pages/finance_management/edit1";
+        //return trainerSalaryService.getTrainerSalaryPaidById(id);
     }
+
 
     @GetMapping("/delete/{id}")
     public String deleteTrainerSalaryPaid(@PathVariable Long id) {
         trainerSalaryService.deleteTrainerSalaryPaid(id);
-        return "redirect:/trainersalary/list";
+        return "redirect:/trainersalarysummary/list";
     }
 
 

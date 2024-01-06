@@ -9,11 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("student")
+@RequestMapping("/student")
 public class StudentController {
     @Autowired
     private StudentService studentService;
-
 
     @GetMapping("/add")
     public String showAddStudentPage(Model model) {
