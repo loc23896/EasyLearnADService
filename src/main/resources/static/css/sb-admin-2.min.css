@@ -56,6 +56,14 @@
     color : red;
 }
 
+.custom-video{
+    width: 380px;
+    height: 200px;
+}
+.custom-video-sm{
+    width:200px;
+    height:100px;
+}
 
 html {
   font-family: sans-serif;

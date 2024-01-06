@@ -87,6 +87,8 @@ public interface ApiPath {
     String LESSON_EDIT_UPDATE = API + "/lesson-edit/update";
     String LESSON_EDIT_DELETE = API + "/lesson-edit/delete";
     String LESSON_EDIT_SAVE_OR_UPDATE = API+ "/lesson-edit/save-or-update";
+    String LESSON_EDIT_GET_LIST_BY_COURSE_ID = API + "/lesson-edit/get-all-by-courseId";
+    String LESSON_EDIT_DELETE_LIST_BY_COURSE_ID = API + "/lesson-edit/delete-all-by-courseId";
 
 //END ADMIN_TRAINER_LESSON_EDIT
 

@@ -1,7 +1,7 @@
 package com.easy.learn.callApi;
 
 import com.easy.learn.consts.ApiPath;
-import com.easy.learn.dto.CourseEdit.CourseEdit;
+//import com.easy.learn.dto.CourseEdit.CourseEdit;
 import com.easy.learn.dto.CourseEdit.CourseEditDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class CourseEditService {
     RestTemplate restTemplate;
 
 
-    public List<CourseEdit> getAllCourseEdit() {
+    public List<CourseEditDTO> getAllCourseEdit() {
         String url = apiHostUrl + ApiPath.COURSE_EDIT_GET_ALL;
         HttpHeaders headers = new HttpHeaders();
 
@@ -42,7 +42,7 @@ public class CourseEditService {
 
         return  courseEditDTO.getList();
     }
-    public CourseEdit getCourseEditById(Long id) {
+    public CourseEditDTO getCourseEditById(Long id) {
         String url = apiHostUrl + ApiPath.COURSE_EDIT_GET_ONE + "?id=" + id;
 
         HttpHeaders headers = new HttpHeaders();
@@ -60,7 +60,7 @@ public class CourseEditService {
 
         return  courseEditDTO.getData();
     }
-    public CourseEdit createCourseEdit(CourseEditDTO dto) {
+    public CourseEditDTO createCourseEdit(CourseEditDTO dto) {
         String url = apiHostUrl + ApiPath.COURSE_EDIT_CREATE;
 
         HttpHeaders headers = new HttpHeaders();
@@ -69,11 +69,11 @@ public class CourseEditService {
 
         HttpEntity<CourseEditDTO> entity = new HttpEntity<>(dto, headers);
 
-        ResponseEntity<CourseEdit> responseEntity = restTemplate.exchange(
+        ResponseEntity<CourseEditDTO> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 entity,
-                CourseEdit.class
+                CourseEditDTO.class
         );
 
         if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
@@ -83,7 +83,7 @@ public class CourseEditService {
         }
     }
 
-    public CourseEdit updateCourseEdit(CourseEditDTO dto) {
+    public CourseEditDTO updateCourseEdit(CourseEditDTO dto) {
         String url = apiHostUrl + ApiPath.COURSE_EDIT_UPDATE;
 
         HttpHeaders headers = new HttpHeaders();
@@ -92,11 +92,11 @@ public class CourseEditService {
 
         HttpEntity<CourseEditDTO> entity = new HttpEntity<>(dto, headers);
 
-        ResponseEntity<CourseEdit> responseEntity = restTemplate.exchange(
+        ResponseEntity<CourseEditDTO> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.PUT,
                 entity,
-                CourseEdit.class
+                CourseEditDTO.class
         );
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -126,7 +126,7 @@ public class CourseEditService {
         return responseEntity.getStatusCode() == HttpStatus.OK;
     }
 
-    public CourseEdit saveOrUpdateCourseEdit(CourseEditDTO dto) {
+    public CourseEditDTO saveOrUpdateCourseEdit(CourseEditDTO dto) {
         String url = apiHostUrl + ApiPath.COURSE_EDIT_SAVE_OR_UPDATE;
 
         HttpHeaders headers = new HttpHeaders();
@@ -136,11 +136,11 @@ public class CourseEditService {
         HttpEntity<CourseEditDTO> entity = new HttpEntity<>(dto, headers);
 
         try {
-            ResponseEntity<CourseEdit> responseEntity = restTemplate.exchange(
+            ResponseEntity<CourseEditDTO> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
                     entity,
-                    CourseEdit.class
+                    CourseEditDTO.class
             );
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {

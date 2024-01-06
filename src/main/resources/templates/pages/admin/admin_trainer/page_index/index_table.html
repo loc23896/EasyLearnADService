@@ -37,9 +37,20 @@
                             <div class="row d-flex justify-content-between">
                                 <h3 th:text="${list.title}" class="card-title"></h3>
 
+                                <div>
+
+                                <button th:if="${list.status}" class="btn btn-danger rounded-pill p-1" disabled>
+                                    <span class="label label-success m-0 p-1">ACTIVE</span>
+                                </button>
+                                    <button th:if="${!list.status}" class="btn btn-success rounded-pill p-1" disabled>
+                                        <span class="label label-danger m-0 p-1">INACTIVE</span>
+                                    </button>
+
                                 <a th:href="@{'/adminTrainer/update/' + ${list.id}}" class="btn btn-danger btn-circle btn-sm">
+
                                     <i class="fa-solid fa-pen-nib"></i>
                                 </a>
+                                </div>
 
                             </div>
 
