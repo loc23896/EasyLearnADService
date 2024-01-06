@@ -2,12 +2,15 @@ package com.easy.learn.controller;
 
 import com.easy.learn.callApi.CourseEditService;
 
-import com.easy.learn.callApi.LessonEditService;
+
 import com.easy.learn.consts.UrlPath;
 import com.easy.learn.dto.CourseEdit.CourseEdit;
 import com.easy.learn.dto.CourseEdit.CourseEditDTO;
 
+<<<<<<< Updated upstream
 import com.easy.learn.dto.LessonEdit.LessonEditDTO;
+=======
+>>>>>>> Stashed changes
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.validation.Valid;
 import java.io.InputStream;
@@ -23,8 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.util.Objects;
+
 
 @Controller
 public class AdminTrainerController {

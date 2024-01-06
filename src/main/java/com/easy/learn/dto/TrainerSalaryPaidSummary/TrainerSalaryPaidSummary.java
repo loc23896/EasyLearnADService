@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class TrainerSalaryPaidSummary implements Serializable {
     private Long id;
     private String trainerSalaryPaidId;
-    private Integer weekNumber;
     private Integer monthNumber;
     private Integer yearNumber;
     private Double totalNumber;
