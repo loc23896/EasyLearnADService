@@ -92,6 +92,19 @@
         </div>
     </div>
 
+    <!-- Create Section -->
+    <h3 class="mt-4">Create</h3>
+    <form th:action="@{/trainersalarysummary/save}" th:object="${trainerSalaryPaidDTO}" method="POST">
+        <input type="hidden" th:field="*{id}"/>
+        <label class="form-label">Trainer Salary Paid ID: <input class="form-control" type="text" th:field="*{trainerSalaryPaidId}"/></label><br>
+        <label class="form-label">Week Number: <input class="form-control" type="text" th:field="*{weekNumber}"/></label><br>
+        <label class="form-label">Month Number: <input class="form-control" type="text" th:field="*{monthNumber}"/></label><br>
+        <label class="form-label">Year Number: <input class="form-control" type="text" th:field="*{yearNumber}"/></label><br>
+        <label class="form-label">Total Number: <input class="form-control" type="text" th:field="*{totalNumber}"/></label><br>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+
+
     <!-- END Table -->
 
                     <!--end of table notification admin -->

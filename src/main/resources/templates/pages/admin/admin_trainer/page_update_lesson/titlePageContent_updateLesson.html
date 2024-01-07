@@ -2,8 +2,10 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
+
 <div th:fragment="titlePageContent" class="card table px-5 py-5">
-    <form th:action="@{'/adminTrainer/'+${courseById.id}+'/saveLesson'}" th:object="${lessonEditDTO}" enctype="multipart/form-data" method="post">
+
+    <form th:action="@{'/adminTrainer/'+${courseById.id}+'/saveTest'}" th:object="${lessonEditDTO}" enctype="multipart/form-data" method="post">
         <div class="text-center w-100">
             <h2>Import test form</h2>
         </div>
@@ -21,16 +23,16 @@
 
                 <hr>
                 <div class="mb-3">
-                    <h3 class="fs-5">Choose Video</h3>
+                    <h3 class="fs-5">Choose File test</h3>
                     <input name="videoLessonEdit" type="file">
                 </div>
                 <hr>
             </div>
             <hr>
             <div>
-                <a th:href="@{'/adminTrainer/edit/'+${courseById.id}}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-                <button type="submit" class="btn btn-primary"
-                        onclick="return confirm('Are you sure you want to create this Lesson?')">Yes</button>
+<!--                <a th:href="@{'/adminTrainer/edit/'+${courseById.id}}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>-->
+<!--                <button type="submit" class="btn btn-primary"-->
+<!--                        onclick="return confirm('Are you sure you want to create this Lesson?')">Yes</button>-->
 
             </div>
         </div>
