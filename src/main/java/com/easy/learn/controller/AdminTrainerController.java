@@ -1,13 +1,8 @@
 package com.easy.learn.controller;
 
 import com.easy.learn.callApi.CourseEditService;
-
-
-
-
 import com.easy.learn.callApi.LessonEditService;
 import com.easy.learn.callApi.TestEditService;
-
 import com.easy.learn.consts.UrlPath;
 //import com.easy.learn.dto.CourseEdit.CourseEdit;
 import com.easy.learn.dto.CourseEdit.CourseEditDTO;
