@@ -3,6 +3,11 @@ package com.easy.learn.controller;
 import com.easy.learn.callApi.CourseEditService;
 
 
+
+
+import com.easy.learn.callApi.LessonEditService;
+import com.easy.learn.callApi.TestEditService;
+
 import com.easy.learn.consts.UrlPath;
 //import com.easy.learn.dto.CourseEdit.CourseEdit;
 import com.easy.learn.dto.CourseEdit.CourseEditDTO;
@@ -11,6 +16,8 @@ import com.easy.learn.dto.CourseEdit.CourseEditDTO;
 //import com.easy.learn.dto.LessonEdit.LessonEdit;
 import com.easy.learn.dto.LessonEdit.LessonEditDTO;
 
+
+import com.easy.learn.dto.TestEditDTO.TestEditDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,12 +46,13 @@ public class AdminTrainerController {
     private LessonEditService lessonEditService;
     @Autowired
     private CourseEditService courseEditService;
+    @Autowired
+    private TestEditService testEditService;
 
     @ModelAttribute("courseEditDTO")
     public CourseEditDTO initCourseEdit() {
         return new CourseEditDTO();
     }
-
 
 
     @GetMapping("/index")
@@ -102,6 +110,7 @@ public class AdminTrainerController {
         model.addAttribute("listLesson",lessonEditService.getAllLessonByCourseId(id));
 
             return "pages/admin/admin_trainer/page_edit_course/page_edit";
+
     }
 
 
@@ -141,9 +150,11 @@ public class AdminTrainerController {
     @PostMapping("/{id}/saveLesson")
     public String saveLessonToCourse(@PathVariable Long id,
                                      @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
+                                     @ModelAttribute("testEditDTO") TestEditDTO testEditDTO,
                                      @RequestParam("videoLessonEdit") MultipartFile videoCourseEdit) {
 
         try {
+            //set video
             Path videoPath = Paths.get("src/main/resources/static/videos/lesson");
 
             if (!Files.exists(videoPath)) {
@@ -162,9 +173,12 @@ public class AdminTrainerController {
             e.printStackTrace();
         }
 
+        //đang viết
         if(lessonEditDTO.getId()==null){
+            //set 1-n course to n lesson || lesson.courseId
             CourseEditDTO courseEdit = courseEditService.getCourseEditById(id);
             lessonEditDTO.setCourseEditId(courseEdit.getId());
+            //set n-1 list lesson to 1 course || course.listLesson
             List<LessonEditDTO> lessonList = lessonEditService.getAllLessonEdit();
             courseEdit.setLessonEdits(lessonList);
             courseEditService.updateCourseEdit(courseEdit);
@@ -172,16 +186,8 @@ public class AdminTrainerController {
         }
             lessonEditService.updateLessonEdit(lessonEditDTO);
 
+
         return "redirect:/adminTrainer/edit/"+id;
-
-    }
-
-    @GetMapping("/{id}/updateLesson/{lessonId}")
-    public String updateLesson(@PathVariable Long id,
-                               Model model,
-                               @PathVariable Long lessonId) {
-        model.addAttribute("lessonUpdate", lessonEditService.getLessonEditById(lessonId));
-        return "/adminTrainer/{id}/saveLesson";
 
     }
 
@@ -197,7 +203,40 @@ public class AdminTrainerController {
     }
 
 
+    @GetMapping("/{id}/updateLesson/{lessonId}")
+    public String updateLesson(@PathVariable Long id,
+                               Model model,
+                               @PathVariable Long lessonId) {
 
+        model.addAttribute("lessonUpdate", lessonEditService.getLessonEditById(lessonId));
+        return "pages/admin/admin_trainer/page_update_lesson/page_updateLesson_index.html";
+    }
+
+// tạm ngưng//
+//    @PostMapping("/{id}/saveTest/{testId}")
+//    public String saveLessonToCourse(@PathVariable Long id,
+//                                     @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
+//                                     @ModelAttribute("testEditDTO") TestEditDTO testEditDTO,
+//                                     @RequestParam("testFile") MultipartFile testFile) {
+//
+//        if(FileUploadController.checkExcelFormat(testFile)){
+//            try{
+//                //add file test to db
+//                List<TestEditDTO> testEditDTOS = FileUploadController.convertExcelToList(testFile.getInputStream());
+//                testEditService.saveAllList(testEditDTOS);
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if(testEditDTO.getId()==null){
+//            //set id lesson to column test
+//            lessonEditDTO = lessonEditService.getLessonEditById(id);
+//            testEditDTO.setLessonEditId(lessonEditDTO.getId());
+//            testEditService.updateTestEdit(testEditDTO);
+//        }
+//
+//    }
 
 
 

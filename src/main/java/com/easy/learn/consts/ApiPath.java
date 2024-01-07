@@ -123,6 +123,18 @@ public interface ApiPath {
 
     // end
 
+//START ADMIN_TRAINER_TEST_EDIT by LOC
+    String TEST_EDIT_GET_ALL = API + "/test-edit/get-all";
+    String TEST_EDIT_GET_ONE = API + "/test-edit/get-one";
+    String TEST_EDIT_CREATE = API + "/test-edit/create";
+    String TEST_EDIT_UPDATE = API + "/test-edit/update";
+    String TEST_EDIT_DELETE = API + "/test-edit/delete";
+    String TEST_EDIT_SAVE_OR_UPDATE = API+ "/test-edit/save-or-update";
+    String TEST_EDIT_GET_LIST_BY_COURSE_ID = API + "/test-edit/get-all-by-courseId";
+    String TEST_EDIT_DELETE_LIST_BY_COURSE_ID = API + "/test-edit/delete-all-by-courseId";
+    String TEST_EDIT_SAVE_FILE_ALL = API + "/test-edit/save-all";
+
+//END ADMIN_TRAINER_TEST_EDIT by LOC
 
 
 }

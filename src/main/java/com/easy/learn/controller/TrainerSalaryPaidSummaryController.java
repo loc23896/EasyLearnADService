@@ -21,7 +21,7 @@ public class TrainerSalaryPaidSummaryController {
     public String getAllTrainerSalaryPaid(Model model) {
         model.addAttribute("trainerSalaryPaidList", trainerSalaryService.getAllTrainerSalaryPaid());
         model.addAttribute("trainerSalaryPaidDTO", new TrainerSalaryPaidSummaryDTO()); // For form binding
-        return "/pages/finance_management/list";
+        return "pages/finance_management/list";
     }
 
     @PostMapping("/save")
@@ -42,7 +42,7 @@ public class TrainerSalaryPaidSummaryController {
         TrainerSalaryPaidSummary trainerSalaryPaid = trainerSalaryService.getTrainerSalaryPaidById(id);
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
 
-        return "/pages/finance_management/view";
+        return "pages/finance_management/view";
     }
 
     @GetMapping("/edit/{id}")
@@ -52,6 +52,7 @@ public class TrainerSalaryPaidSummaryController {
         model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
         return "/pages/finance_management/edit1";
         //return trainerSalaryService.getTrainerSalaryPaidById(id);
+
     }
 
 
