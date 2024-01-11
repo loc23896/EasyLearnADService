@@ -2,8 +2,8 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <div class="card shadow mb-4" th:fragment="table">
-    <div class="card-header py-3">
-        <div class="container">
+    <div class="card-header py-3 row align-items-center d-flex flex-column justify-content-center">
+        <div class="container col-xl-4 p-3 card rounded">
 
 
             <form th:action="@{'/trainer/save'}" th:object="${trainerDTO}" method="post" onsubmit="return checkNull2()">

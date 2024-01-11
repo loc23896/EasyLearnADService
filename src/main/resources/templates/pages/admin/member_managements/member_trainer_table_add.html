@@ -2,8 +2,8 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <div class="card shadow mb-4" th:fragment="table">
-    <div class="card-header py-3">
-        <div class="container">
+    <div class="card-header py-3 row align-items-center d-flex flex-column justify-content-center">
+        <div class="container col-xl-4 p-3 card rounded">
 
 
             <form th:action="@{'/trainer/save'}" th:object="${trainerDTO}" method="post" onsubmit="return checkNull2()">
@@ -13,14 +13,14 @@
                 <label class="form-label">Email: <input class="form-control" id="email" type="text" th:field="*{email}"/></label><br>
                 <label class="form-label">Phone: <input class="form-control" id="phone" type="text" th:field="*{phone}"/></label><br>
                 <label class="form-label">Date Created: <input class="form-control" id="datecreated" type="date" th:field="*{datecreated}"/></label><br>
-                <select class=" form-select" aria-label="Default select example" id="status" th:field="*{status}" >
+                <select class=" form-select p-1 mt-2 rounded" aria-label="Default select example" id="status" th:field="*{status}" >
                     <option selected value="-1">Status</option>
                     <option value="Online" >Online</option>
                     <option value="Offline" >Offline</option>
                 </select>
                 <br>
                 <div class="footer-action">
-                    <button type="submit" value="save" class="auth-submit" style="margin-top: 10px; border-radius:5px">Save</button>
+                    <button type="submit" value="save" class="auth-submit btn mt-3 btn-primary" >Save</button>
                 </div>
             </form>
         </div>

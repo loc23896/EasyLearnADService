@@ -2,6 +2,7 @@ package com.easy.learn.controller;
 
 import com.easy.learn.callApi.StudentService;
 import com.easy.learn.callApi.TrainerService;
+import com.easy.learn.dto.Manager.ManagerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,7 +67,8 @@ public class AdminController {
 
 
     @GetMapping("/profile")
-    public String profile() {
+    public String profile(Model model) {
+        model.addAttribute("managerDTO", new ManagerDTO());
         return "pages/admin/admin_profile";
     }
 
@@ -81,13 +83,16 @@ public class AdminController {
         return "pages/admin/admin_profile_other";
     }
 
-//    @GetMapping("/login")
-//    public String login() {
-//        return "pages/loginPage/login";
-//    }
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("manager", new ManagerDTO());
+
+        return "pages/loginPage/login";
+    }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("managerDTO", new ManagerDTO());
         return "pages/loginPage/register";
     }
 }
