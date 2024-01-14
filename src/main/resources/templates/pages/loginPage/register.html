@@ -40,15 +40,15 @@
                     </div>
                     <label for="confirmPassword"></label><input type="password" class="auth-form-input" placeholder="Confirm Password" id="confirmPassword" onblur=checkPassword()>
 
-                    <select class="form-select"  aria-label="Default select example" th:field="*{managementtype}" >
+                    <select style="border-radius: 5px;height: 30px;margin: -3px 0 -5px 0" class="form-select "  aria-label="Default select example" th:field="*{managementtype}" >
                         <option selected value="-1">Management Type</option>
                         <option value="finance" >Finance</option>
                         <option value="members" >Members</option>
                         <option value="customer" >Customer Care</option>
                     </select>
                     <div class="footer-action">
-                        <button type="submit"  value="Sign Up" class="auth-submit"  >Sign Up</button>
-                        <a class="auth-btn-direct">Sign In</a>
+                        <button type="submit" style="flex: 1;border: 1px solid #fd5353; text-align: center; height: 40px;border-radius: 5px;line-height: 40px;   margin-left: 0;background: #f44336;color: white;" value="Sign Up" class="auth-submit" >Sign Up</button>
+                        <a class="auth-btn-direct" th:href="@{/admin/login}" type="submit">Sign In</a>
                     </div>
                 </form>
             </div>

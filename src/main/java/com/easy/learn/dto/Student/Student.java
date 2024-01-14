@@ -19,4 +19,5 @@ public class Student {
     private String phone;
     private String classId;
     private Long memberManagermentId;
+    private String account;
 }

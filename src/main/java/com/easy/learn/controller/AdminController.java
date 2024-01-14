@@ -1,5 +1,6 @@
 package com.easy.learn.controller;
 
+import com.easy.learn.callApi.ManagerService;
 import com.easy.learn.callApi.StudentService;
 import com.easy.learn.callApi.TrainerService;
 import com.easy.learn.dto.Manager.ManagerDTO;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -17,8 +19,12 @@ public class AdminController {
     private StudentService studentService;
     @Autowired
     private TrainerService trainerService;
+    @Autowired
+    private ManagerService managerService;
+
     @GetMapping("")
     public String index() {
+
         return "pages/admin/index";
     }
 
@@ -95,6 +101,12 @@ public class AdminController {
         model.addAttribute("managerDTO", new ManagerDTO());
         return "pages/loginPage/register";
     }
+    @PostMapping("/process_register")
+    public String processRegister(ManagerDTO managerDTO) {
+        managerService.create(managerDTO);
+        return "pages/loginPage/register_success";
+    }
+
 }
 
 

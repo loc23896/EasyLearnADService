@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
 <div th:replace="pages/fragment/head :: head"></div>
 
-  <body id="page-top"  >
+  <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -23,15 +24,12 @@
           <!-- End of Topbar -->
 
           <!--Navbar-->
-<!--          <div th:replace="pages/fragment/navbar :: navbar"></div>-->
+          <div th:replace="pages/fragment/navbar :: navbar"></div>
           <!--End of navbar -->
 
           <!-- Begin Page Content -->
           <div class="container-fluid pt-2">
-<!--            <div th:replace="pages/fragment/pageContent :: pageContent"></div>-->
-            <div th:replace="pages/fragment/dashboard :: dashboard"></div>
-            <div th:replace="pages/fragment/table :: table"></div>
-
+            <div th:replace="pages/fragment/pageContent :: pageContent"></div>
         </div>
           <!-- END Page Content -->
 

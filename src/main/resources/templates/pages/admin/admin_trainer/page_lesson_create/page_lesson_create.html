@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="pages/fragment/head :: head"></div>
+<div th:replace="pages/fragment/head_after_login :: head"></div>
 
   <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <div th:replace="pages/fragment/sidebar :: sidebar"></div>
+      <div th:replace="pages/fragment/sidebar_after_login :: sidebar"></div>
 
       <!-- End of Sidebar -->
 
@@ -20,7 +20,7 @@
         <div id="content">
 
           <!-- Topbar -->
-          <div th:replace="pages/fragment/topbar :: topbar"></div>
+          <div th:replace="pages/fragment/topbar_after_login :: topbar"></div>
           <!-- End of Topbar -->
 
           <!--Navbar-->
@@ -42,7 +42,7 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <div th:replace="pages/fragment/footer :: footer"></div>
+        <div th:replace="pages/fragment/footer_after_login :: footer"></div>
         <!-- End of Footer -->
 
       </div>
@@ -58,7 +58,7 @@
     <!-- END Scroll to Top Button-->
 
     <!--START Logout Modal-->
-    <div th:replace="pages/fragment/modal_logout :: modal_logout"></div>
+    <div th:replace="pages/fragment/modal_logout_after_login :: modal_logout"></div>
     <!--END of Logout Modal-->
 
     <!-- Bootstrap core JavaScript-->

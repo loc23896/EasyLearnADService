@@ -1,6 +1,7 @@
 package com.easy.learn.controller;
 
 import com.easy.learn.callApi.TrainerService;
+import com.easy.learn.dto.Manager.ManagerDTO;
 import com.easy.learn.dto.TrainerMember.Trainer;
 import com.easy.learn.dto.TrainerMember.TrainerDTO;
 import org.springframework.beans.factory.annotation.Autowired;

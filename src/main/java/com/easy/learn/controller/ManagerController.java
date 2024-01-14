@@ -1,16 +1,18 @@
 package com.easy.learn.controller;
 
+import ch.qos.logback.classic.gaffer.GafferConfigurator;
 import com.easy.learn.callApi.ManagerService;
-import com.easy.learn.consts.ApiPath;
 import com.easy.learn.dto.Manager.Manager;
 import com.easy.learn.dto.Manager.ManagerDTO;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 //import javax.jws.WebParam;
 //import java.util.List;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class ManagerController {
     @Autowired
     private ManagerService managerService;
+
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
@@ -27,7 +30,6 @@ public class ManagerController {
     @PostMapping("/process_register")
     public String processRegister(ManagerDTO managerDTO) {
         managerService.create(managerDTO);
-
         return "pages/loginPage/register_success";
     }
     @GetMapping("/login")
@@ -37,19 +39,23 @@ public class ManagerController {
     }
 
     @PostMapping("/process_login")
-    public String processLoginPage(@ModelAttribute("manager") ManagerDTO managerDTO, Model model) {
+    public String processLoginPage(@ModelAttribute("manager") ManagerDTO managerDTO, Model model , HttpSession session) {
         String username = managerDTO.getUsername();
         String password = managerDTO.getPassword();
             ManagerDTO authenticatedManager = managerService.signIn(username, password);
 
+
+
             if (authenticatedManager.getData()!=null && authenticatedManager.getData().getId()!=null) {
-                return "pages/admin/index";
+                session.setAttribute("username", username);
+                model.addAttribute("username", managerDTO.getUsername());
+                return "pages/admin/index_after_login";
             } else {
                 model.addAttribute("error", "Username không tồn tại hoặc mật khẩu sai.");
                 return "pages/loginPage/login";
             }
-
     }
+
 
 
     @GetMapping("/admin/index")
