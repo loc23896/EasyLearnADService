@@ -46,6 +46,9 @@
                         <option value="members" >Members</option>
                         <option value="customer" >Customer Care</option>
                     </select>
+                    <div th:if="${error}" class="error-message">
+                        <p th:text="${error}"  style="color: red"></p>
+                    </div>
                     <div class="footer-action">
                         <button type="submit" style="flex: 1;border: 1px solid #fd5353; text-align: center; height: 40px;border-radius: 5px;line-height: 40px;   margin-left: 0;background: #f44336;color: white;" value="Sign Up" class="auth-submit" >Sign Up</button>
                         <a class="auth-btn-direct" th:href="@{/admin/login}" type="submit">Sign In</a>

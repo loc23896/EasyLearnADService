@@ -106,6 +106,7 @@ public interface ApiPath {
     String MANAGER_UPDATE = API + "/manager/update";
     String MANAGER_DELETE = API + "/manager/delete";
     String MANAGER_SIGN_IN = API+"/manager/sign-in";
+    String MANAGER_GET_BY_USERNAME = API+"/manager/get-by-user-name";
 
     // student
     String STUDENT_GET_ALL = API + "/student/get-all";

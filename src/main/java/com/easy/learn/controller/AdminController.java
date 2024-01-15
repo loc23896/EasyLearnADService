@@ -3,13 +3,15 @@ package com.easy.learn.controller;
 import com.easy.learn.callApi.ManagerService;
 import com.easy.learn.callApi.StudentService;
 import com.easy.learn.callApi.TrainerService;
+import com.easy.learn.dto.Manager.Manager;
 import com.easy.learn.dto.Manager.ManagerDTO;
+import com.easy.learn.dto.TrainerMember.TrainerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -71,15 +73,34 @@ public class AdminController {
         return "pages/admin/admin_table";
     }
 
+    @PostMapping("/save")
+    public String saveManager(@ModelAttribute("managerDTO") ManagerDTO managerDTO) {
+        if (managerDTO.getId() == null) {
+
+            managerService.create(managerDTO);
+        } else {
+            managerService.update(managerDTO);
+
+        }
+        return "redirect:/admin/profile";
+    }
 
     @GetMapping("/profile")
-    public String profile(Model model) {
-        model.addAttribute("managerDTO", new ManagerDTO());
+    public String profile(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+
+        Manager manager = managerService.getManagerByUsername(username).getData();
+        model.addAttribute("managerDTO", manager);
+
         return "pages/admin/admin_profile";
     }
 
+
     @GetMapping("/profile/edit")
-    public String changeProfile() {
+    public String changeProfile(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        Manager manager = managerService.getManagerByUsername(username).getData();
+        model.addAttribute("managerDTO", manager);
         return "pages/admin/admin_profile_edit";
     }
 
