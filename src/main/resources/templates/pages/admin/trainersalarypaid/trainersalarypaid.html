@@ -117,7 +117,7 @@
 
                                         <div class="form-group">
                                             <label for="trainerId" id="labeltrainerId">Trainer</label>
-                                            <select required class="form-control" id="trainerId" th:field="*{trainerId}"
+                                            <select class="form-control" id="trainerId" th:field="*{trainerId}"
                                                     onchange="updateTrainerInfo()">
                                                 <option value="">Choose...</option>
                                                 <th:block th:each="trainer : ${trainers}">
@@ -154,6 +154,8 @@
                                                 <input type="text" id="amount" class="form-control" required/>
                                                 <span class="currency">VNĐ</span>
                                             </div>
+                                            <input type="hidden" id="amountNumeric" name="amount" />
+
                                             <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"
                                                  class="invalid-feedback"></div>
                                         </div>

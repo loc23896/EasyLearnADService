@@ -70,6 +70,7 @@ function editSalary(salaryId) {
             document.getElementById('trainerId').value = data.trainerId;
             document.getElementById('paymentDate').value = data.paymentDate;
             document.getElementById('amount').value = data.amount;
+            document.getElementById('amountNumeric').value = data.amount;
             document.getElementById('trainerFirstName').value = data.trainerFirstName;
             document.getElementById('trainerLastName').value = data.trainerLastName;
             document.getElementById('description').value = data.description;
@@ -177,39 +178,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 ////////////////////////////////
-document.addEventListener('DOMContentLoaded', function() {
-     const amountInput = document.getElementById('amount');
-
-     amountInput.addEventListener('input', function(event) {
-         let value = event.target.value;
-
-         // Remove all non-numeric characters for processing
-         let numericValue = value.replace(/,/g, '').replace(/[^\d]/g, '');
-
-         // Format with commas
-         let formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-         // Set the formatted value back to the input field
-         event.target.value = formattedValue;
-     });
- });
-
 ////////////////////////////////
 document.addEventListener('DOMContentLoaded', function() {
     const amountInput = document.getElementById('amount');
+    const amountNumeric = document.getElementById('amountNumeric');
 
     amountInput.addEventListener('input', function(event) {
         let value = event.target.value;
 
-        // Allow only numeric input
-        value = value.replace(/[^0-9]/g, '');
+        // Remove non-numeric characters for numeric value
+        let numericValue = value.replace(/,/g, '').replace(/[^\d]/g, '');
 
-        // Format with commas
-        let formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // Update hidden input with numeric value
+        amountNumeric.value = numericValue;
 
-        // Set the formatted value back to the input field
+        // Format with commas for display
+        let formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // Set the formatted value back to the display input field
         event.target.value = formattedValue;
     });
 });
+
 
 ////////////////////////////////
