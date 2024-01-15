@@ -91,6 +91,7 @@ public class TrainerSalaryPaidController {
         //return "/pages/admin/trainersalarypaid/list";
         return "/pages/admin/trainersalarypaid/trainersalarypaid";
     }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<TrainerSalaryPaid> getTrainerSalary(@PathVariable Long id) {
         // Fetch the salary details from the service
@@ -108,6 +109,7 @@ public class TrainerSalaryPaidController {
     public TrainerSalaryPaid getTrainerSalaryPaid(@PathVariable Long id) {
         return trainerSalaryPaidService.getTrainerSalaryPaidById(id); // Trả về null hoặc xử lý lỗi nếu không tìm thấy
     }
+
     @PostMapping("/save")
     public ResponseEntity<ResponseMessage> saveTrainerSalary(@ModelAttribute TrainerSalaryPaidDTO trainerSalary) {
         ResponseMessage responseMessage;
@@ -119,7 +121,7 @@ public class TrainerSalaryPaidController {
                 responseMessage = new ResponseMessage("error", "Error Saving Trainer Salary");
             }
         } else {
-            TrainerSalaryPaid updateSalary= trainerSalaryPaidService.updateTrainerSalaryPaid(trainerSalary);
+            TrainerSalaryPaid updateSalary = trainerSalaryPaidService.updateTrainerSalaryPaid(trainerSalary);
             if (updateSalary != null) {
                 responseMessage = new ResponseMessage("success", "Trainer Salary Saved Successfully");
             } else {

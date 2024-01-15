@@ -53,7 +53,7 @@ public class JasperReportUtils {
     }
 
     public static byte[] exportCsv(String reportPath, Map<String, Object> params, String delimiter, List<?> data) throws JRException {
-        JasperPrint jasperPrint = getJasperPrint(reportPath, params,data);
+        JasperPrint jasperPrint = getJasperPrint(reportPath, params, data);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         JRCsvExporter exporter = new JRCsvExporter();
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));

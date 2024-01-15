@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class JasperReportService {
 
-public byte[] generateTrainerSalaryPaidReport(List<TrainerSalaryPaid> trainerSalaries, String format) throws JRException {
+    public byte[] generateTrainerSalaryPaidReport(List<TrainerSalaryPaid> trainerSalaries, String format) throws JRException {
         String reportPath = "src/main/resources/reports/Simple_Blue.jrxml";
         Map<String, Object> params = new HashMap<>(); // Add any required parameters here
 

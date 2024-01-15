@@ -22,4 +22,25 @@
 #searchInput:focus {
     border-color: #007bff; /* Đổi màu viền khi ô tìm kiếm được focus */
 }
+/* Style to make the display input look similar to a regular input field */
+.input-container {
+    position: relative;
+    display: flex;
+}
+
+#amount {
+    padding-right: 40px; /* Adjust padding to ensure space for VNĐ text */
+}
+
+.currency {
+    position: absolute;
+    right: 10px; /* Adjust as needed */
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    font-size: 1rem; /* Adjust as needed */
+    color: #6c757d; /* Adjust color as needed */
+}
+
 

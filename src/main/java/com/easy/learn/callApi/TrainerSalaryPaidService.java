@@ -24,108 +24,110 @@ public class TrainerSalaryPaidService {
     RestTemplate restTemplate;
 
     public List<TrainerSalaryPaid> getAllTrainerSalaryPaid() {
-            String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_GET_ALL;
-            org.springframework.http.HttpHeaders headers = new HttpHeaders();
+        String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_GET_ALL;
+        org.springframework.http.HttpHeaders headers = new HttpHeaders();
 
 
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            HttpEntity<String> entity = new HttpEntity<>(headers);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            ResponseEntity<TrainerSalaryPaidDTO> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    entity,
-                    new ParameterizedTypeReference<TrainerSalaryPaidDTO>() {});
+        ResponseEntity<TrainerSalaryPaidDTO> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<TrainerSalaryPaidDTO>() {
+                });
 
-            TrainerSalaryPaidDTO trainerSalaryPaidDTO = responseEntity.getBody();
+        TrainerSalaryPaidDTO trainerSalaryPaidDTO = responseEntity.getBody();
 
-            return  trainerSalaryPaidDTO.getList();
+        return trainerSalaryPaidDTO.getList();
+    }
+
+
+    public TrainerSalaryPaid getTrainerSalaryPaidById(Long id) {
+        String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_GET_ONE + "?id=" + id;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TrainerSalaryPaidDTO> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<TrainerSalaryPaidDTO>() {
+                });
+
+        TrainerSalaryPaidDTO trainerSalaryPaidDTO = responseEntity.getBody();
+
+        return trainerSalaryPaidDTO.getData();
+    }
+
+    public TrainerSalaryPaid createTrainerSalaryPaid(TrainerSalaryPaidDTO trainerSalaryPaidDTO) {
+        String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_CREATE;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<TrainerSalaryPaidDTO> entity = new HttpEntity<>(trainerSalaryPaidDTO, headers);
+
+        ResponseEntity<TrainerSalaryPaid> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                entity,
+                TrainerSalaryPaid.class
+        );
+
+        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
+            return responseEntity.getBody();
+        } else {
+            return null;
         }
+    }
 
+    public TrainerSalaryPaid updateTrainerSalaryPaid(TrainerSalaryPaidDTO trainerSalaryPaidDTO) {
+        String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_UPDATE;
 
-        public TrainerSalaryPaid getTrainerSalaryPaidById(Long id) {
-            String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_GET_ONE + "?id=" + id;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<TrainerSalaryPaidDTO> entity = new HttpEntity<>(trainerSalaryPaidDTO, headers);
 
-            HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<TrainerSalaryPaid> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.PUT,
+                entity,
+                TrainerSalaryPaid.class
+        );
 
-            ResponseEntity<TrainerSalaryPaidDTO> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    entity,
-                    new ParameterizedTypeReference<TrainerSalaryPaidDTO>() {});
-
-            TrainerSalaryPaidDTO trainerSalaryPaidDTO = responseEntity.getBody();
-
-            return  trainerSalaryPaidDTO.getData();
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return responseEntity.getBody();
+        } else {
+            // Handle the error case
+            // You might want to throw an exception or return null, depending on your use case
+            return null;
         }
+    }
 
-        public TrainerSalaryPaid createTrainerSalaryPaid(TrainerSalaryPaidDTO trainerSalaryPaidDTO) {
-            String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_CREATE;
+    public boolean deleteTrainerSalaryPaid(Long id) {
+        String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_DELETE + "?id=" + id;
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
-            HttpEntity<TrainerSalaryPaidDTO> entity = new HttpEntity<>(trainerSalaryPaidDTO, headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            ResponseEntity<TrainerSalaryPaid> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.POST,
-                    entity,
-                    TrainerSalaryPaid.class
-            );
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.DELETE,
+                entity,
+                Void.class
+        );
 
-            if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
-                return responseEntity.getBody();
-            } else {
-                return null;
-            }
-        }
-
-        public TrainerSalaryPaid updateTrainerSalaryPaid(TrainerSalaryPaidDTO trainerSalaryPaidDTO) {
-            String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_UPDATE;
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<TrainerSalaryPaidDTO> entity = new HttpEntity<>(trainerSalaryPaidDTO, headers);
-
-            ResponseEntity<TrainerSalaryPaid> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.PUT,
-                    entity,
-                    TrainerSalaryPaid.class
-            );
-
-            if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                return responseEntity.getBody();
-            } else {
-                // Handle the error case
-                // You might want to throw an exception or return null, depending on your use case
-                return null;
-            }
-        }
-
-        public boolean deleteTrainerSalaryPaid(Long id) {
-            String url = apiHostUrl + ApiPath.TRAINER_SALARY_PAID_DELETE + "?id=" + id;
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-
-            ResponseEntity<Void> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.DELETE,
-                    entity,
-                    Void.class
-            );
-
-            return responseEntity.getStatusCode() == HttpStatus.OK;
-        }
+        return responseEntity.getStatusCode() == HttpStatus.OK;
+    }
 
 }

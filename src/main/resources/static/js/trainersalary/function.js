@@ -177,3 +177,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 ////////////////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+     const amountInput = document.getElementById('amount');
+
+     amountInput.addEventListener('input', function(event) {
+         let value = event.target.value;
+
+         // Remove all non-numeric characters for processing
+         let numericValue = value.replace(/,/g, '').replace(/[^\d]/g, '');
+
+         // Format with commas
+         let formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+         // Set the formatted value back to the input field
+         event.target.value = formattedValue;
+     });
+ });
+
+////////////////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+    const amountInput = document.getElementById('amount');
+
+    amountInput.addEventListener('input', function(event) {
+        let value = event.target.value;
+
+        // Allow only numeric input
+        value = value.replace(/[^0-9]/g, '');
+
+        // Format with commas
+        let formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // Set the formatted value back to the input field
+        event.target.value = formattedValue;
+    });
+});
+
+////////////////////////////////
