@@ -159,16 +159,14 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{trainerLastName}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="306" y="0" width="92" height="20" uuid="732011a3-c4e8-4b82-b789-78fb8f244972">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72ccd8dc-82aa-4f05-8cb4-8e2e40860345"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="306" y="0" width="92" height="20" uuid="732011a3-c4e8-4b82-b789-78fb8f244972"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0").format($F{amount})]]></textFieldExpression>
 			</textField>
+
 			<textField textAdjust="StretchHeight">
 				<reportElement x="398" y="0" width="92" height="20" uuid="7a821e3f-7618-4bb8-9046-5e82dc70bf7f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="003e3631-64d2-403b-a11f-700eaeefa979"/>
