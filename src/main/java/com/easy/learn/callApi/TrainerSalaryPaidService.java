@@ -124,4 +124,5 @@ public class TrainerSalaryPaidService {
 
             return responseEntity.getStatusCode() == HttpStatus.OK;
         }
+
 }

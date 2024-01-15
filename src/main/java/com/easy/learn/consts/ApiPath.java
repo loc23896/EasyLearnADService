@@ -120,6 +120,7 @@ public interface ApiPath {
     String TRAINER_CREATE = API + "/trainer/create";
     String TRAINER_UPDATE = API + "/trainer/update";
     String TRAINER_DELETE = API + "/trainer/delete";
+    String TRAINER_GET_ALL_NOT_HAVE_SALARY = API + "/trainer/get-all-not-salary";
 
     // end
 
