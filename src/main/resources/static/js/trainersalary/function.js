@@ -115,3 +115,65 @@ function prepareCreateNew() {
     $('#trainerSalaryModal').modal('show');
 }
 ////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function () {
+        const rowsPerPage = 5; // Số hàng trên mỗi trang
+        let currentPage = 1; // Bắt đầu từ trang đầu tiên
+        const table = document.querySelector('.table tbody'); // Chọn phần body của bảng
+        const rows = table.querySelectorAll('tr'); // Lấy tất cả hàng của bảng
+        const pageCount = Math.ceil(rows.length / rowsPerPage); // Tính tổng số trang
+
+        function displayRows() {
+            rows.forEach(row => row.style.display = 'none');
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            rows.forEach((row, index) => {
+                if (index >= start && index < end) row.style.display = '';
+            });
+        }
+
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ''; // Xóa các nút cũ
+            for (let i = 1; i <= pageCount; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.textContent = i;
+                pageBtn.className = currentPage === i ? 'btn btn-primary' : 'btn btn-secondary';
+
+                // Thêm margin-right cho mỗi nút, trừ nút cuối cùng
+                if (i < pageCount) {
+                    pageBtn.style.marginRight = '10px';
+                }
+
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    displayRows();
+                    updatePagination();
+                });
+                pagination.appendChild(pageBtn);
+            }
+        }
+
+
+        displayRows();
+        updatePagination();
+    });
+////////////////////////////////
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function () {
+        const searchText = this.value.toLowerCase();
+        const table = document.querySelector('.table tbody');
+        const rows = table.querySelectorAll('tr');
+
+        rows.forEach(row => {
+            // Giả sử first name ở cột 2 và last name ở cột 3
+            const firstNameCell = row.cells[1].textContent.toLowerCase();
+            const lastNameCell = row.cells[2].textContent.toLowerCase();
+
+            const matches = firstNameCell.includes(searchText) || lastNameCell.includes(searchText);
+            row.style.display = matches ? '' : 'none';
+        });
+    });
+});
+////////////////////////////////
