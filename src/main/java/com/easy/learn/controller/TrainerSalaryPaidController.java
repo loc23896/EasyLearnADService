@@ -41,26 +41,46 @@ public class TrainerSalaryPaidController {
     @Autowired
     private JasperReportService reportService;
 
-    private final Path reportLocation = Paths.get("src/main/resources");
+
+    public TrainerSalaryPaidController(JasperReportService reportService, TrainerSalaryPaidService trainerSalaryPaidService) {
+        this.reportService = reportService;
+        this.trainerSalaryPaidService = trainerSalaryPaidService;
+    }
+
     @GetMapping("/downloadReport")
-    public ResponseEntity<Resource> downloadReport() {
+    public ResponseEntity<Resource> downloadReport(@RequestParam String format) {
         try {
             List<TrainerSalaryPaid> trainerSalaries = trainerSalaryPaidService.getAllTrainerSalaryPaid();
-            byte[] reportData = reportService.generateTrainerSalaryPaidReport(trainerSalaries);
-
+            byte[] reportData = reportService.generateTrainerSalaryPaidReport(trainerSalaries, format);
+            System.out.println(reportData);
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "inline; filename=TrainerSalaryPaidReport.pdf");
+            headers.add("Content-Disposition", "inline; filename=TrainerSalaryPaidReport." + format);
 
+            MediaType mediaType = getMediaTypeForFormat(format);
             ByteArrayResource resource = new ByteArrayResource(reportData);
             return ResponseEntity.ok()
                     .headers(headers)
-                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentType(mediaType)
                     .body(resource);
-        } catch (JRException e) {
+        } catch (JRException | IllegalArgumentException e) {
             e.printStackTrace();
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
+
+    private MediaType getMediaTypeForFormat(String format) {
+        switch (format.toLowerCase()) {
+            case "pdf":
+                return MediaType.APPLICATION_PDF;
+            case "excel":
+                return MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            case "csv":
+                return MediaType.parseMediaType("text/csv");
+            default:
+                throw new IllegalArgumentException("Invalid media type");
+        }
+    }
+
     @GetMapping
     public String listTrainerSalaries(Model model) {
         List<Trainer> listTrainer = trainerService.getAllTrainerotSalary();
