@@ -81,7 +81,7 @@ public class TrainerSalaryPaidController {
         }
     }
 
-    @GetMapping
+    @GetMapping("")
     public String listTrainerSalaries(Model model) {
         List<Trainer> listTrainer = trainerService.getAllTrainerotSalary();
         System.out.println("Trainers: " + listTrainer);
@@ -121,7 +121,9 @@ public class TrainerSalaryPaidController {
                 responseMessage = new ResponseMessage("error", "Error Saving Trainer Salary");
             }
         } else {
+            trainerSalary.setTrainerId(trainerSalary.getTrainerId());
             TrainerSalaryPaid updateSalary = trainerSalaryPaidService.updateTrainerSalaryPaid(trainerSalary);
+
             if (updateSalary != null) {
                 responseMessage = new ResponseMessage("success", "Trainer Salary Saved Successfully");
             } else {
