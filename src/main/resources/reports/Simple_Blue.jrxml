@@ -130,7 +130,7 @@
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="d4059512-f676-4c27-98ba-fb7575b701f8"/>
 			</line>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="30" y="0" width="92" height="20" uuid="2ec5bd76-fd11-424f-8d07-b1f104782a94">
+				<reportElement x="40" y="0" width="92" height="20" uuid="2ec5bd76-fd11-424f-8d07-b1f104782a94">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87687773-f88a-4a12-9dc4-b2dbbfc30bd9"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -160,7 +160,7 @@
 				<textFieldExpression><![CDATA[$F{trainerLastName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="306" y="0" width="92" height="20" uuid="732011a3-c4e8-4b82-b789-78fb8f244972"/>
+				<reportElement x="290" y="0" width="92" height="20" uuid="732011a3-c4e8-4b82-b789-78fb8f244972"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
@@ -168,7 +168,7 @@
 			</textField>
 
 			<textField textAdjust="StretchHeight">
-				<reportElement x="398" y="0" width="92" height="20" uuid="7a821e3f-7618-4bb8-9046-5e82dc70bf7f">
+				<reportElement x="378" y="0" width="92" height="20" uuid="7a821e3f-7618-4bb8-9046-5e82dc70bf7f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="003e3631-64d2-403b-a11f-700eaeefa979"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -178,7 +178,7 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="460" y="0" width="92" height="20" uuid="28892e37-2463-43fe-a263-21b9008f4ddf">
+				<reportElement x="480" y="0" width="92" height="20" uuid="28892e37-2463-43fe-a263-21b9008f4ddf">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50c8e7c5-a5d2-4232-a6a1-93e6066f6360"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
