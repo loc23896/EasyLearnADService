@@ -37,6 +37,23 @@ public class TrainerService {
 
         return trainerDTO.getList();
     }
+    public List<Trainer> getAllTrainerotSalary() {
+        String url = apiHostUrl + ApiPath.TRAINER_GET_ALL_NOT_HAVE_SALARY;
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TrainerDTO> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<TrainerDTO>() {}
+        );
+        TrainerDTO trainerDTO = responseEntity.getBody();
+
+        return trainerDTO.getList();
+    }
     public Trainer getById(Long id) {
         String url = apiHostUrl + ApiPath.TRAINER_GET_ID + "?id=" + id;
         HttpHeaders headers = new HttpHeaders();

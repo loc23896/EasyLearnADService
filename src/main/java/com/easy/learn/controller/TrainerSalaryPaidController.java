@@ -1,73 +1,147 @@
 package com.easy.learn.controller;
 
+import com.easy.learn.callApi.JasperReportService;
 import com.easy.learn.callApi.TrainerSalaryPaidService;
+import com.easy.learn.callApi.TrainerService;
+import com.easy.learn.dto.TrainerMember.Trainer;
+import com.easy.learn.dto.TrainerSalaryPaid.ResponseMessage;
 import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaid;
 import com.easy.learn.dto.TrainerSalaryPaid.TrainerSalaryPaidDTO;
+import com.easy.learn.dto.TrainerSalaryPaidSummary.TrainerSalaryPaidSummary;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.springframework.core.io.Resource;
+
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-@RequestMapping("/trainersalary")
+@RequestMapping("/trainer-salary")
 public class TrainerSalaryPaidController {
+
     @Autowired
     private TrainerSalaryPaidService trainerSalaryPaidService;
 
-    @GetMapping("/list")
-    public String getAllTrainerSalaryPaid(Model model) {
-        model.addAttribute("listTrainerSalary", trainerSalaryPaidService.getAllTrainerSalaryPaid());
-        model.addAttribute("trainerSalaryPaidDTO", new TrainerSalaryPaidDTO()); // For form binding
-        return "/pages/finance_management/list";
+    @Autowired
+    private TrainerService trainerService;
+
+    @Autowired
+    private JasperReportService reportService;
+
+
+    public TrainerSalaryPaidController(JasperReportService reportService, TrainerSalaryPaidService trainerSalaryPaidService) {
+        this.reportService = reportService;
+        this.trainerSalaryPaidService = trainerSalaryPaidService;
     }
 
-    // Read: Display one salary
-    @GetMapping("/{id}")
-    public String showTrainerSalary(@PathVariable Long id, Model model) {
-        model.addAttribute("salary", trainerSalaryPaidService.getTrainerSalaryPaidById(id));
-        return "pages/admin/finance_managements/trainerSalaryDetail";
+    @GetMapping("/downloadReport")
+    public ResponseEntity<Resource> downloadReport(@RequestParam String format) {
+        try {
+            List<TrainerSalaryPaid> trainerSalaries = trainerSalaryPaidService.getAllTrainerSalaryPaid();
+            byte[] reportData = reportService.generateTrainerSalaryPaidReport(trainerSalaries, format);
+            System.out.println(reportData);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline; filename=TrainerSalaryPaidReport." + format);
+
+            MediaType mediaType = getMediaTypeForFormat(format);
+            ByteArrayResource resource = new ByteArrayResource(reportData);
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(mediaType)
+                    .body(resource);
+        } catch (JRException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    // Create: Show form to create a new salary
-    @GetMapping("/new")
-    public String showNewForm(Model model) {
-        model.addAttribute("salary", new TrainerSalaryPaidDTO());
-        return "trainerSalaryForm";
+    private MediaType getMediaTypeForFormat(String format) {
+        switch (format.toLowerCase()) {
+            case "pdf":
+                return MediaType.APPLICATION_PDF;
+            case "excel":
+                return MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            case "csv":
+                return MediaType.parseMediaType("text/csv");
+            default:
+                throw new IllegalArgumentException("Invalid media type");
+        }
     }
 
-    // Create: Process the form
-    @PostMapping
-    public String saveTrainerSalary(@ModelAttribute TrainerSalaryPaidDTO salary, RedirectAttributes redirectAttributes) {
-        trainerSalaryPaidService.createTrainerSalaryPaid(salary);
-        redirectAttributes.addFlashAttribute("message", "Salary added successfully!");
-        return "redirect:pages/admin/finance_managements/trainer-salary";
+    @GetMapping
+    public String listTrainerSalaries(Model model) {
+        List<Trainer> listTrainer = trainerService.getAllTrainerotSalary();
+        System.out.println("Trainers: " + listTrainer);
+        model.addAttribute("trainerSalaries", trainerSalaryPaidService.getAllTrainerSalaryPaid());
+        model.addAttribute("trainerSalary", new TrainerSalaryPaid());
+        model.addAttribute("trainers", listTrainer);
+        //return "/pages/admin/trainersalarypaid/list";
+        return "/pages/admin/trainersalarypaid/trainersalarypaid";
     }
 
-    // Update: Show form to edit a salary
-    @GetMapping("/edit/{id}")
-    public String editTrainerSalaryPaid(@PathVariable Long id, Model model) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<TrainerSalaryPaid> getTrainerSalary(@PathVariable Long id) {
+        // Fetch the salary details from the service
         TrainerSalaryPaid trainerSalaryPaid = trainerSalaryPaidService.getTrainerSalaryPaidById(id);
-        model.addAttribute("trainerSalaryPaidDTO", trainerSalaryPaid);
-//        List<TrainerSalaryPaid> trainerSalaryPaidList = trainerSalaryService.getAllTrainerSalaryPaid();
-//        model.addAttribute("trainerSalaryPaidList", trainerSalaryPaidList);
-        return "/pages/finance_management/edit";
+
+        if (trainerSalaryPaid != null) {
+            return ResponseEntity.ok(trainerSalaryPaid);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    // Update: Process the edit form
-    @PostMapping("/{id}")
-    public String updateTrainerSalary(@PathVariable Long id, @ModelAttribute TrainerSalaryPaidDTO salary, RedirectAttributes redirectAttributes) {
-        trainerSalaryPaidService.updateTrainerSalaryPaid(salary);
-        redirectAttributes.addFlashAttribute("message", "Salary updated successfully!");
-        return "redirect:pages/admin/finance_managements/trainer-salary";
+    @GetMapping("edit/{id}")
+    @ResponseBody
+    public TrainerSalaryPaid getTrainerSalaryPaid(@PathVariable Long id) {
+        return trainerSalaryPaidService.getTrainerSalaryPaidById(id); // Trả về null hoặc xử lý lỗi nếu không tìm thấy
     }
 
-    // Delete: Remove a salary
-    @GetMapping("/delete/{id}")
-    public String deleteTrainerSalary(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        trainerSalaryPaidService.deleteTrainerSalaryPaid(id);
-        redirectAttributes.addFlashAttribute("message", "Salary deleted successfully!");
-        return "redirect:pages/admin/finance_managements/trainer-salary";
+    @PostMapping("/save")
+    public ResponseEntity<ResponseMessage> saveTrainerSalary(@ModelAttribute TrainerSalaryPaidDTO trainerSalary) {
+        ResponseMessage responseMessage;
+        if (trainerSalary.getId() == null) {
+            TrainerSalaryPaid savedSalary = trainerSalaryPaidService.createTrainerSalaryPaid(trainerSalary);
+            if (savedSalary != null) {
+                responseMessage = new ResponseMessage("success", "Trainer Salary Saved Successfully");
+            } else {
+                responseMessage = new ResponseMessage("error", "Error Saving Trainer Salary");
+            }
+        } else {
+            TrainerSalaryPaid updateSalary = trainerSalaryPaidService.updateTrainerSalaryPaid(trainerSalary);
+            if (updateSalary != null) {
+                responseMessage = new ResponseMessage("success", "Trainer Salary Saved Successfully");
+            } else {
+                responseMessage = new ResponseMessage("error", "Error Saving Trainer Salary");
+            }
+        }
+        return ResponseEntity.ok(responseMessage);
     }
+
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseMessage> deleteTrainerSalary(@PathVariable Long id) {
+        try {
+            trainerSalaryPaidService.deleteTrainerSalaryPaid(id);
+            return ResponseEntity.ok(new ResponseMessage("success", "Trainer Salary Deleted Successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("error", "Error Deleting Trainer Salary"));
+        }
+    }
+
+
 }
-
