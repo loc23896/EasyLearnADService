@@ -13,6 +13,7 @@
                 <tr>
                     <th class="col-1">Number Lesson</th>
                     <th class="col-4">Lesson Title</th>
+<!--                    <th class="col-4">Quiz Test</th>-->
                     <th class="col-2">Video</th>
 
                 </tr>
@@ -21,6 +22,7 @@
                 <tr>
                     <th>Number Lesson</th>
                     <th>Lesson Title</th>
+<!--                    <th>Quiz Test</th>-->
                     <th>Video</th>
 
                 </tr>
@@ -29,6 +31,9 @@
                 <tr th:each="list : ${lessonList}">
                     <td th:text="${list.number}"></td>
                     <td th:text="${list.title}"></td>
+<!--                    <td>-->
+<!--                        <input type="checkbox" disabled="">-->
+<!--                    </td>-->
                     <td>
                         <video th:src="@{'/getVideo/'+${list.video}}"
                                class="custom-video-sm" controls></video>
