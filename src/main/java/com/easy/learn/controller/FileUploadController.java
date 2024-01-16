@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -13,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FileUploadController {
+    @Autowired
+    private TestEditDTO testEditDTO;
 
     //check file excel type or not
     public static boolean checkExcelFormat(MultipartFile file){
@@ -24,14 +27,10 @@ public class FileUploadController {
     }
 
     //convert excel to list
-    public static List<TestEditDTO> convertExcelToList(InputStream inputStream){
+    public static List<TestEditDTO> convertExcelToList(InputStream inputStream, Long id){
         List<TestEditDTO> list = new ArrayList<>();
         try{
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-            for(int i = 0; i < workbook.getNumberOfSheets(); i++) {
-                System.out.println("Sheet Name: " + workbook.getSheetName(i));
-            }
-
             //set sheet name
             XSSFSheet sheet = workbook.getSheet("data");
 
@@ -60,10 +59,10 @@ public class FileUploadController {
                         case 4 : testEditDTO.setOp4(String.valueOf(cell)); break;
                         case 5 : testEditDTO.setRightAnswer(String.valueOf(cell)); break;
                         default: break;
-
                     }
                     cid++;
                 }
+                testEditDTO.setLessonEditId(id);
                 list.add(testEditDTO);
             }
 

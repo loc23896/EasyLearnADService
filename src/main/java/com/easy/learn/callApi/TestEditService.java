@@ -152,8 +152,8 @@ public class TestEditService {
     }
 
 
-    public List<TestEditDTO> getAllTestByCourseId(Long id) {
-        String url = apiHostUrl + ApiPath.TEST_EDIT_GET_LIST_BY_COURSE_ID + "?id=" + id;
+    public List<TestEditDTO> getAllTestByLessonId(Long id) {
+        String url = apiHostUrl + ApiPath.TEST_EDIT_GET_LIST_BY_LESSON_ID + "?id=" + id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -179,8 +179,8 @@ public class TestEditService {
         }
     }
 
-    public boolean deleteAllTestByCourseId(Long id) {
-        String url = apiHostUrl + ApiPath.TEST_EDIT_DELETE_LIST_BY_COURSE_ID + "?id=" + id;
+    public boolean deleteAllTestByLessonId(Long id) {
+        String url = apiHostUrl + ApiPath.TEST_EDIT_DELETE_LIST_BY_LESSON_ID + "?id=" + id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -220,5 +220,50 @@ public class TestEditService {
             e.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public List<TestEditDTO> getAllTestByCourseId(Long id) {
+        String url = apiHostUrl + ApiPath.TEST_EDIT_GET_LIST_BY_COURSE_ID + "?id=" + id;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<TestEditDTO> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    entity,
+                    new ParameterizedTypeReference<TestEditDTO>() {});
+
+            TestEditDTO lessonEditResponseDTO = responseEntity.getBody();
+
+            if (lessonEditResponseDTO != null) {
+                return lessonEditResponseDTO.getList();
+            }else{
+                return Collections.emptyList();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public boolean deleteAllTestByCourseId(Long id) {
+        String url = apiHostUrl + ApiPath.TEST_EDIT_DELETE_LIST_BY_COURSE_ID + "?id=" + id;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.DELETE,
+                entity,
+                Void.class
+        );
+
+        return responseEntity.getStatusCode() == HttpStatus.OK;
     }
 }
