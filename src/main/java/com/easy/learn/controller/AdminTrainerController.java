@@ -103,7 +103,6 @@ public class AdminTrainerController {
 
         model.addAttribute("courseEdit", courseEditService.getCourseEditById(id));
         model.addAttribute("listLesson",lessonEditService.getAllLessonByCourseId(id));
-
             return "pages/admin/admin_trainer/page_edit_course/page_edit";
 
     }
@@ -122,6 +121,7 @@ public class AdminTrainerController {
 
     @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable Long id){
+        testEditService.deleteAllTestByCourseId(id);
         lessonEditService.deleteAllLessonByCourseId(id);
         courseEditService.deleteCourseEdit(id);
         return "redirect:/adminTrainer/index";
@@ -139,13 +139,77 @@ public class AdminTrainerController {
         //add new lesson form in table -> page_lesson_create.html
         model.addAttribute("lessonEditDTO", new LessonEditDTO());
 
+
         return "pages/admin/admin_trainer/page_lesson_create/page_lesson_create.html";
     }
 
     @PostMapping("/{id}/saveLesson")
     public String saveLessonToCourse(@PathVariable Long id,
                                      @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
-                                     @ModelAttribute("testEditDTO") TestEditDTO testEditDTO,
+                                     @RequestParam("videoLessonEdit") MultipartFile videoCourseEdit) {
+        try {
+            //set video
+            Path videoPath = Paths.get("src/main/resources/static/videos/lesson");
+
+            if (!Files.exists(videoPath)) {
+                Files.createDirectories(videoPath);
+            }
+
+            if (!videoCourseEdit.isEmpty()) {
+                Files.copy(videoCourseEdit.getInputStream(),
+                        videoPath.resolve(videoCourseEdit.getOriginalFilename()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                lessonEditDTO.setVideo(videoCourseEdit.getOriginalFilename().toLowerCase());
+                lessonEditDTO.setLastUpdate(LocalDateTime.now());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(lessonEditDTO.getId()==null){
+            CourseEditDTO courseEdit = courseEditService.getCourseEditById(id);
+            lessonEditDTO.setCourseEditId(courseEdit.getId());
+        }
+            lessonEditService.updateLessonEdit(lessonEditDTO);
+
+
+        return "redirect:/adminTrainer/edit/"+id;
+
+    }
+
+    @GetMapping("/{id}/deleteLesson/{lessonId}")
+    public String deleteLesson(@PathVariable Long id,
+                               @PathVariable Long lessonId) {
+        // Xác định khóa học
+        if (lessonEditService.getLessonEditById(lessonId) != null) {
+            testEditService.deleteAllTestByLessonId(lessonId);
+            lessonEditService.deleteLessonEdit(lessonId);
+        }
+        return "redirect:/adminTrainer/edit/" + id;
+
+    }
+
+
+
+    //===============================================================PAGE UPDATE Lesson ==================================
+    @GetMapping("{courseId}/updateLesson/{lessonId}")
+    public String updateLesson(@PathVariable Long courseId,
+                               Model model,
+                               @PathVariable Long lessonId){
+        model.addAttribute("courseIdToLesson", courseEditService.getCourseEditById(courseId));
+        model.addAttribute("testList", testEditService.getAllTestByLessonId(lessonId));
+        model.addAttribute("lessonUpdate", lessonEditService.getLessonEditById(lessonId));
+        if(testEditService.getAllTestByLessonId(lessonId) != null){
+            model.addAttribute("checked","checked");
+        }
+        return "pages/admin/admin_trainer/page_update_lesson/page_updateLesson_index.html";
+    }
+
+    @PostMapping("{courseId}/updateLesson/{lessonId}")
+    public String updateLessonToCourse(@PathVariable Long courseId,
+                                       @PathVariable Long lessonId,
+                                     @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
                                      @RequestParam("videoLessonEdit") MultipartFile videoCourseEdit) {
 
         try {
@@ -168,72 +232,55 @@ public class AdminTrainerController {
             e.printStackTrace();
         }
 
-        //đang viết
         if(lessonEditDTO.getId()==null){
-            //set 1-n course to n lesson || lesson.courseId
-            CourseEditDTO courseEdit = courseEditService.getCourseEditById(id);
+            CourseEditDTO courseEdit = courseEditService.getCourseEditById(courseId);
             lessonEditDTO.setCourseEditId(courseEdit.getId());
-            //set n-1 list lesson to 1 course || course.listLesson
-            List<LessonEditDTO> lessonList = lessonEditService.getAllLessonEdit();
-            courseEdit.setLessonEdits(lessonList);
-            courseEditService.updateCourseEdit(courseEdit);
 
-        }
+        }else{
+            CourseEditDTO courseEdit = courseEditService.getCourseEditById(courseId);
+            lessonEditDTO.setCourseEditId(courseEdit.getId());
             lessonEditService.updateLessonEdit(lessonEditDTO);
-
-
-        return "redirect:/adminTrainer/edit/"+id;
-
-    }
-
-    @GetMapping("/{id}/deleteLesson/{lessonId}")
-    public String deleteLesson(@PathVariable Long id,
-                               @PathVariable Long lessonId) {
-        // Xác định khóa học
-        if (lessonEditService.getLessonEditById(lessonId) != null) {
-            lessonEditService.deleteLessonEdit(lessonId);
         }
-        return "redirect:/adminTrainer/edit/" + id;
+
+
+        return "redirect:/adminTrainer/edit/"+courseId;
 
     }
 
+    //================================== add quiz
 
-    @GetMapping("/{id}/updateLesson/{lessonId}")
-    public String updateLesson(@PathVariable Long id,
-                               Model model,
-                               @PathVariable Long lessonId) {
-
+    @GetMapping("/addQuiz/{lessonId}")
+    public String addQuiz(Model model,
+                               @PathVariable Long lessonId){
+        model.addAttribute("testList", testEditService.getAllTestByLessonId(lessonId));
         model.addAttribute("lessonUpdate", lessonEditService.getLessonEditById(lessonId));
-        return "pages/admin/admin_trainer/page_update_lesson/page_updateLesson_index.html";
+        if(testEditService.getAllTestByLessonId(lessonId) != null){
+            model.addAttribute("checked","checked");
+        }
+        return "pages/admin/admin_trainer/page_add_file_quiz/page_add_quiz_index.html";
     }
 
-// tạm ngưng//
-//    @PostMapping("/{id}/saveTest/{testId}")
-//    public String saveLessonToCourse(@PathVariable Long id,
-//                                     @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
-//                                     @ModelAttribute("testEditDTO") TestEditDTO testEditDTO,
-//                                     @RequestParam("testFile") MultipartFile testFile) {
-//
-//        if(FileUploadController.checkExcelFormat(testFile)){
-//            try{
-//                //add file test to db
-//                List<TestEditDTO> testEditDTOS = FileUploadController.convertExcelToList(testFile.getInputStream());
-//                testEditService.saveAllList(testEditDTOS);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        if(testEditDTO.getId()==null){
-//            //set id lesson to column test
-//            lessonEditDTO = lessonEditService.getLessonEditById(id);
-//            testEditDTO.setLessonEditId(lessonEditDTO.getId());
-//            testEditService.updateTestEdit(testEditDTO);
-//        }
-//
-//    }
+    @PostMapping("/addQuiz/{lessonId}")
+    public String addQuizTest(@PathVariable Long lessonId,
+                                   @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
+                                   @ModelAttribute("testEditDTO") TestEditDTO testEditDTO,
+                                   @RequestParam("testFile") MultipartFile testFile) {
+        if(FileUploadController.checkExcelFormat(testFile)){
+            try{
+                //add file test to db
+                List<TestEditDTO> testEditDTOS = FileUploadController.convertExcelToList(testFile.getInputStream(),lessonId);
+                if(!testEditDTOS.isEmpty()){
+                    testEditService.saveAllTest(testEditDTOS);
+                }else{
+                    throw new RuntimeException();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return "redirect:/adminTrainer/addQuiz/"+lessonId;
 
-
+    }
 
 }
 

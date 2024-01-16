@@ -20,4 +20,5 @@ public class StudentDTO extends ResponseDTO<Student> {
     private String phone;
     private String classId;
     private Long memberManagermentId;
+    private String account;
 }

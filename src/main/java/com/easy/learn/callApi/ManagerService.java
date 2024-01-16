@@ -84,6 +84,7 @@ public class ManagerService {
         }
     }
 
+
     public Manager update(ManagerDTO managerDTO) {
         String url = apiHostUrl + ApiPath.MANAGER_UPDATE;
         HttpHeaders headers = new HttpHeaders();
@@ -104,7 +105,9 @@ public class ManagerService {
         } else {
             return null;
         }
+
     }
+
 
     public boolean delete(String uuid) {
         String url = apiHostUrl + ApiPath.MANAGER_DELETE + "?uuid" + uuid;
@@ -141,6 +144,21 @@ public class ManagerService {
                 HttpMethod.POST,
                 entity,
                 ManagerDTO.class
+        );
+        return responseEntity.getBody();
+    }
+    public ManagerDTO getManagerByUsername(String username) {
+        String url = apiHostUrl + ApiPath.MANAGER_GET_BY_USERNAME + "?username=" + username;
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ManagerDTO> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<ManagerDTO>() {}
         );
         return responseEntity.getBody();
     }

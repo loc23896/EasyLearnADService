@@ -106,6 +106,7 @@ public interface ApiPath {
     String MANAGER_UPDATE = API + "/manager/update";
     String MANAGER_DELETE = API + "/manager/delete";
     String MANAGER_SIGN_IN = API+"/manager/sign-in";
+    String MANAGER_GET_BY_USERNAME = API+"/manager/get-by-user-name";
 
     // student
     String STUDENT_GET_ALL = API + "/student/get-all";
@@ -131,9 +132,12 @@ public interface ApiPath {
     String TEST_EDIT_UPDATE = API + "/test-edit/update";
     String TEST_EDIT_DELETE = API + "/test-edit/delete";
     String TEST_EDIT_SAVE_OR_UPDATE = API+ "/test-edit/save-or-update";
+    String TEST_EDIT_GET_LIST_BY_LESSON_ID = API + "/test-edit/get-all-by-lessonId";
+    String TEST_EDIT_DELETE_LIST_BY_LESSON_ID = API + "/test-edit/delete-all-by-lessonId";
+    String TEST_EDIT_SAVE_FILE_ALL = API + "/test-edit/save-all";
+
     String TEST_EDIT_GET_LIST_BY_COURSE_ID = API + "/test-edit/get-all-by-courseId";
     String TEST_EDIT_DELETE_LIST_BY_COURSE_ID = API + "/test-edit/delete-all-by-courseId";
-    String TEST_EDIT_SAVE_FILE_ALL = API + "/test-edit/save-all";
 
 //END ADMIN_TRAINER_TEST_EDIT by LOC
 

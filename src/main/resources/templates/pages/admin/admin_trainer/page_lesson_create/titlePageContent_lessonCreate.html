@@ -3,7 +3,10 @@
 
 
 <div th:fragment="titlePageContent" class="card table px-5 py-5">
-    <form th:action="@{'/adminTrainer/'+${courseById.id}+'/saveLesson'}" th:object="${lessonEditDTO}" enctype="multipart/form-data" method="post">
+
+
+    <form th:action="@{'/adminTrainer/'+${courseById.id}+'/saveLesson'}" th:object="${lessonEditDTO}" onsubmit="return checkNullLessonCreate()"
+          enctype="multipart/form-data" method="post">
         <div class="text-center w-100">
             <h2>Create lesson form</h2>
         </div>
@@ -12,25 +15,23 @@
                 <input type="hidden" th:field="*{id}">
                 <div class="mb-3">
                     <label for="number" class="form-label">Number lesson</label>
-                    <input th:field="*{number}" type="text" class="form-control" id="number" placeholder="1,2,3,..."></input>
+                    <input th:field="*{number}" type="text" class="form-control input-element" id="number" placeholder="1, 2, 3, ...">
+                    <p id="numberError" class="e-wrong d-none"></p>
                 </div>
                 <div class="my-3">
                     <label for="Title" class="form-label">Title Course</label>
-                    <input th:field="*{title}" type="text" class="form-control" id="Title" placeholder="Title">
+                    <input th:field="*{title}" type="text" class="form-control input-element" id="Title" placeholder="Title">
+                    <p id="titleError" class="e-wrong d-none"></p>
                 </div>
 
                 <hr>
-                <div class="mb-3 d-flex justify-content-between">
-                    <div>
-                    <h3 class="fs-5">Choose Video</h3>
-                    <input name="videoLessonEdit" type="file">
+                    <div class="mb-3">
+                        <h3 class="fs-5">Choose Video</h3>
+                        <input name="videoLessonEdit" type="file" class="input-element">
+                        <p id="videoError" class="e-wrong d-none"></p>
                     </div>
-                    <div>
-                    <h3 class="fs-5">Choose File</h3>
-                    <input name="testFile" type="file">
-                    </div>
-                </div>
                 <hr>
+
             </div>
             <hr>
             <div>

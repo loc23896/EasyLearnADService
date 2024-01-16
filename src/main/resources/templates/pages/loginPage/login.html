@@ -14,7 +14,7 @@
     <div class="auth-container">
         <div class="auth-action-left">
             <div class="auth-form-outer">
-                <h2 class="auth-form-title">
+                <h2 class=" title2">
                     Sign In
                 </h2>
                 <form class="login-form" th:action="@{/process_login}" th:object="${manager}"  method="POST" onsubmit="return checkNull1()">
@@ -30,11 +30,11 @@
                 </form>
                 <!-- Add this code snippet in the login.html page -->
                 <div th:if="${error}" class="error-message">
-                    <p th:text="${error}"></p>
+                    <p th:text="${error}" style="color: red"></p>
                 </div>
-                <div class="auth-forgot-password">
-                    <a th:href="@{/register}">Forgot Password</a>
-                </div>
+<!--                <div class="auth-forgot-password">-->
+<!--&lt;!&ndash;                    <a th:href="@{/register}">Forgot Password</a>&ndash;&gt;-->
+<!--                </div>-->
             </div>
         </div>
         <div class="auth-action-right">

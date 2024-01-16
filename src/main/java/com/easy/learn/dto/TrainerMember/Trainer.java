@@ -21,4 +21,5 @@ public class Trainer {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+7")
     private Date datecreated;
     private String status;
+    private String account;
 }

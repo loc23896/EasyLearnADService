@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TestEditDTO extends ResponseDTO<TestEditDTO> {
     private Long id;
-    private String title;
     private String question;
     private String op1;
     private String op2;

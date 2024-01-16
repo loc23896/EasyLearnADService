@@ -1,12 +1,17 @@
 package com.easy.learn.controller;
 
+import com.easy.learn.callApi.ManagerService;
 import com.easy.learn.callApi.StudentService;
 import com.easy.learn.callApi.TrainerService;
+import com.easy.learn.dto.Manager.Manager;
+import com.easy.learn.dto.Manager.ManagerDTO;
+import com.easy.learn.dto.TrainerMember.TrainerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -16,8 +21,12 @@ public class AdminController {
     private StudentService studentService;
     @Autowired
     private TrainerService trainerService;
+    @Autowired
+    private ManagerService managerService;
+
     @GetMapping("")
     public String index() {
+
         return "pages/admin/index";
     }
 
@@ -64,14 +73,34 @@ public class AdminController {
         return "pages/admin/admin_table";
     }
 
+    @PostMapping("/save")
+    public String saveManager(@ModelAttribute("managerDTO") ManagerDTO managerDTO) {
+        if (managerDTO.getId() == null) {
+
+            managerService.create(managerDTO);
+        } else {
+            managerService.update(managerDTO);
+
+        }
+        return "redirect:/admin/profile";
+    }
 
     @GetMapping("/profile")
-    public String profile() {
+    public String profile(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+
+        Manager manager = managerService.getManagerByUsername(username).getData();
+        model.addAttribute("managerDTO", manager);
+
         return "pages/admin/admin_profile";
     }
 
+
     @GetMapping("/profile/edit")
-    public String changeProfile() {
+    public String changeProfile(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        Manager manager = managerService.getManagerByUsername(username).getData();
+        model.addAttribute("managerDTO", manager);
         return "pages/admin/admin_profile_edit";
     }
 
@@ -81,15 +110,24 @@ public class AdminController {
         return "pages/admin/admin_profile_other";
     }
 
-//    @GetMapping("/login")
-//    public String login() {
-//        return "pages/loginPage/login";
-//    }
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("manager", new ManagerDTO());
+
+        return "pages/loginPage/login";
+    }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("managerDTO", new ManagerDTO());
         return "pages/loginPage/register";
     }
+    @PostMapping("/process_register")
+    public String processRegister(ManagerDTO managerDTO) {
+        managerService.create(managerDTO);
+        return "pages/loginPage/register_success";
+    }
+
 }
 
 

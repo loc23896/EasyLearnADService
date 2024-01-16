@@ -21,15 +21,17 @@
                     <th>Phone</th>
                     <th>Date Created</th>
                     <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
-                <tr th:each="trainerDTO : ${trainerList}" >
+                <tr th:each="trainerDTO : ${trainerList}">
                     <td th:text="${trainerDTO.id}"></td>
-                    <td th:text="${trainerDTO.firstName}"></td>
-                    <td th:text="${trainerDTO.lastName}"></td>
+                    <td th:text="${trainerDTO.firstname}"></td>
+                    <td th:text="${trainerDTO.lastname}"></td>
                     <td th:text="${trainerDTO.email}"></td>
                     <td th:text="${trainerDTO.phone}"></td>
-                    <td th:text="${trainerDTO.dateCreated}"></td>
+                    <td th:text="${trainerDTO.datecreated}"></td>
                     <td th:text="${trainerDTO.status}"></td>
                     <td>
                         <a class="btn btn-info" th:href="@{'/trainer/edit/' + ${trainerDTO.id}}">Edit</a>

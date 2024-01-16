@@ -8,7 +8,7 @@
     <!-- Sidebar - Brand -->
     <a
             class="sidebar-brand d-flex align-items-center justify-content-center"
-            th:href="@{/admin}"
+            th:href="@{#}"
     >
         <div class="sidebar-brand-icon">
             <img
@@ -25,7 +25,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" th:href="@{/admin/dashboard}">
+        <a class="nav-link" th:href="@{#}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Dashboard</span></a
         >
@@ -35,7 +35,7 @@
     <hr class="sidebar-divider" />
 
     <li class="nav-item active">
-        <a class="nav-link" th:href="@{/adminTrainer/index}">
+        <a class="nav-link" th:href="@{#}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Admin Trainer</span></a
         >
@@ -84,8 +84,8 @@
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Member style</h6>
-                <a class="collapse-item" th:href="@{/admin/member/student}">Student</a>
-                <a class="collapse-item" th:href="@{/admin/member/trainer}">Trainer</a>
+                <a class="collapse-item" th:href="@{#}">Student</a>
+                <a class="collapse-item" th:href="@{#}">Trainer</a>
             </div>
         </div>
     </li>
@@ -99,8 +99,8 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Customer style</h6>
-                <a class="collapse-item" th:href="@{/admin/customerCare/student}">Student</a>
-                <a class="collapse-item" th:href="@{/admin/customerCare/trainer}">Trainer</a>
+                <a class="collapse-item" th:href="@{#}">Student</a>
+                <a class="collapse-item" th:href="@{#}">Trainer</a>
             </div>
         </div>
     </li>
@@ -117,7 +117,7 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/table}">
+        <a class="nav-link" th:href="@{#}">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a
         >
@@ -132,20 +132,20 @@
     </div>
 
     <!-- Sidebar Message -->
-    <div class="sidebar-card d-none d-lg-flex">
-        <img
-                class="sidebar-card-illustration mb-2"
-                th:src="@{/img/z4880989428596_c95c89ed7fbbd3818bcb5aeaa5e7a096.jpg}"
-                alt="..."
-        />
-        <p class="text-center mb-2">
-            <strong>Easy to learn</strong> is packed with premium features, components,
-            and more!
-        </p>
-        <a
-                class="btn btn-success btn-sm"
-                href="https://startbootstrap.com/theme/sb-admin-pro"
-        >Upgrade to Pro!</a
-        >
-    </div>
+<!--    <div class="sidebar-card d-none d-lg-flex">-->
+<!--        <img-->
+<!--                class="sidebar-card-illustration mb-2"-->
+<!--                th:src="@{/img/z4880989428596_c95c89ed7fbbd3818bcb5aeaa5e7a096.jpg}"-->
+<!--                alt="..."-->
+<!--        />-->
+<!--        <p class="text-center mb-2">-->
+<!--            <strong>Easy to learn</strong> is packed with premium features, components,-->
+<!--            and more!-->
+<!--        </p>-->
+<!--        <a-->
+<!--                class="btn btn-success btn-sm"-->
+<!--                href="https://startbootstrap.com/theme/sb-admin-pro"-->
+<!--        >Upgrade to Pro!</a-->
+<!--        >-->
+<!--    </div>-->
 </ul>
