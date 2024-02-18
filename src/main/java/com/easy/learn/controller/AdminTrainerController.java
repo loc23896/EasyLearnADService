@@ -14,7 +14,13 @@ import com.easy.learn.dto.LessonEdit.LessonEditDTO;
 
 import com.easy.learn.dto.TestEditDTO.TestEditDTO;
 
+import com.lowagie.text.pdf.codec.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -59,32 +66,40 @@ public class AdminTrainerController {
     //==================== start btn ADD COURSE form
 
     @PostMapping("/save")
-    public String saveCourse(@ModelAttribute("courseEditDTO") CourseEditDTO courseEditDTO,
+    public String saveCourse(
+                             @ModelAttribute("courseEditDTO") CourseEditDTO courseEditDTO,
                              @RequestParam("imgCourseEdit") MultipartFile imgCourseEdit) {
         try {
             Path path = Paths.get("src/main/resources/static/img/course");
-
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
             }
 
             InputStream inputStream = imgCourseEdit.getInputStream();
-            Files.copy(inputStream, path.resolve(imgCourseEdit.getOriginalFilename()),
-                    StandardCopyOption.REPLACE_EXISTING);
 
-            courseEditDTO.setImg(imgCourseEdit.getOriginalFilename().toLowerCase());
-            courseEditDTO.setLastUpdate(LocalDateTime.now());
+            if(!imgCourseEdit.isEmpty()) {   //check img form not empty
+                Files.copy(inputStream, path.resolve(imgCourseEdit.getOriginalFilename()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                courseEditDTO.setImg(imgCourseEdit.getOriginalFilename().toLowerCase());
+                courseEditDTO.setLastUpdate(LocalDateTime.now());
+            }
+
+            if(courseEditDTO.getId()==null){    //if create new course
+                if(imgCourseEdit.isEmpty()){   //check img form not empty
+                    throw new RuntimeException(); //if img form empty
+                }
+                courseEditDTO.setStatus(false);
+                courseEditService.createCourseEdit(courseEditDTO);
+            }else{                              //if update course
+                if(imgCourseEdit.isEmpty()){
+                    courseEditDTO.setImg(courseEditService.getCourseEditById(courseEditDTO.getId()).getImg());
+                }
+                courseEditService.updateCourseEdit(courseEditDTO);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Save the course
-        if(courseEditDTO.getId()==null){
-            courseEditDTO.setStatus(false);
-            courseEditService.createCourseEdit(courseEditDTO);
-        }else{
-            courseEditService.updateCourseEdit(courseEditDTO);
-        }
-
         return "redirect:/adminTrainer/index";
     }
 
@@ -163,16 +178,23 @@ public class AdminTrainerController {
                 lessonEditDTO.setLastUpdate(LocalDateTime.now());
             }
 
+            if(lessonEditDTO.getId()==null){
+                if(videoCourseEdit.isEmpty()){
+                    throw new RuntimeException();
+                }
+                CourseEditDTO courseEdit = courseEditService.getCourseEditById(id);
+                lessonEditDTO.setCourseEditId(courseEdit.getId());
+                lessonEditService.createLessonEdit(lessonEditDTO);
+            }else{  //update video lesson
+                if(videoCourseEdit.isEmpty()){
+                    lessonEditDTO.setVideo(lessonEditService.getLessonEditById(lessonEditDTO.getId()).getVideo());
+                }
+                lessonEditService.updateLessonEdit(lessonEditDTO);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        if(lessonEditDTO.getId()==null){
-            CourseEditDTO courseEdit = courseEditService.getCourseEditById(id);
-            lessonEditDTO.setCourseEditId(courseEdit.getId());
-        }
-            lessonEditService.updateLessonEdit(lessonEditDTO);
-
 
         return "redirect:/adminTrainer/edit/"+id;
 
@@ -206,9 +228,9 @@ public class AdminTrainerController {
         return "pages/admin/admin_trainer/page_update_lesson/page_updateLesson_index.html";
     }
 
+
     @PostMapping("{courseId}/updateLesson/{lessonId}")
     public String updateLessonToCourse(@PathVariable Long courseId,
-                                       @PathVariable Long lessonId,
                                      @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
                                      @RequestParam("videoLessonEdit") MultipartFile videoCourseEdit) {
 
@@ -225,23 +247,27 @@ public class AdminTrainerController {
                         videoPath.resolve(videoCourseEdit.getOriginalFilename()),
                         StandardCopyOption.REPLACE_EXISTING);
                 lessonEditDTO.setVideo(videoCourseEdit.getOriginalFilename().toLowerCase());
+            }
+
+            CourseEditDTO courseEdit = courseEditService.getCourseEditById(courseId);
+            lessonEditDTO.setCourseEditId(courseEdit.getId());
+
+            if(lessonEditDTO.getId()==null){
+                if(videoCourseEdit.isEmpty()){
+                    throw new RuntimeException();
+                }
+                lessonEditService.createLessonEdit(lessonEditDTO);
+            }else{  //update video lesson
+                if(videoCourseEdit.isEmpty()){
+                    lessonEditDTO.setVideo(lessonEditService.getLessonEditById(lessonEditDTO.getId()).getVideo());
+                }
                 lessonEditDTO.setLastUpdate(LocalDateTime.now());
+                lessonEditService.updateLessonEdit(lessonEditDTO);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        if(lessonEditDTO.getId()==null){
-            CourseEditDTO courseEdit = courseEditService.getCourseEditById(courseId);
-            lessonEditDTO.setCourseEditId(courseEdit.getId());
-
-        }else{
-            CourseEditDTO courseEdit = courseEditService.getCourseEditById(courseId);
-            lessonEditDTO.setCourseEditId(courseEdit.getId());
-            lessonEditService.updateLessonEdit(lessonEditDTO);
-        }
-
 
         return "redirect:/adminTrainer/edit/"+courseId;
 
@@ -260,27 +286,52 @@ public class AdminTrainerController {
         return "pages/admin/admin_trainer/page_add_file_quiz/page_add_quiz_index.html";
     }
 
+    //add form quiz by quiz file excel
     @PostMapping("/addQuiz/{lessonId}")
     public String addQuizTest(@PathVariable Long lessonId,
                                    @ModelAttribute("lessonEditDTO") LessonEditDTO lessonEditDTO,
-                                   @ModelAttribute("testEditDTO") TestEditDTO testEditDTO,
                                    @RequestParam("testFile") MultipartFile testFile) {
-        if(FileUploadController.checkExcelFormat(testFile)){
+
+        if(!testFile.isEmpty() && FileUploadController.checkExcelFormat(testFile)){
             try{
                 //add file test to db
                 List<TestEditDTO> testEditDTOS = FileUploadController.convertExcelToList(testFile.getInputStream(),lessonId);
+
                 if(!testEditDTOS.isEmpty()){
-                    testEditService.saveAllTest(testEditDTOS);
+                    lessonEditDTO.setTest(testFile.getOriginalFilename());
+                    if(testEditService.getAllTestByLessonId(lessonId).isEmpty()){
+                        testEditService.saveAllTest(testEditDTOS);
+                    }else{
+                        //save all test by lesson id
+                        testEditService.deleteAllTestByLessonId(lessonId);
+                        testEditService.saveAllTest(testEditDTOS);
+                    }
                 }else{
                     throw new RuntimeException();
                 }
+
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
         return "redirect:/adminTrainer/addQuiz/"+lessonId;
-
     }
+
+    //download file quiz form excel
+    @GetMapping("/getQuiz")
+    public ResponseEntity<Resource> downloadQuiz(){
+        String fileName = "QuizForm.xlsx";
+        ByteArrayInputStream actualData = FileUploadController.convertDataToExcel(testEditService.getAllTestEdit());
+        InputStreamResource file = new InputStreamResource(actualData);
+
+        ResponseEntity<Resource> body = ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename ="+fileName)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
+        return body;
+    }
+
+
 
 }
 

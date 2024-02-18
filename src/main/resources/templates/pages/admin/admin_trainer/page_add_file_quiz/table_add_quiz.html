@@ -32,13 +32,14 @@
     <div class="d-flex flex-column align-items-center justify-content-center">
         <div class="w-50 shadow-lg p-4 mb-1 bg-body-tertiary rounded">
 
-            <form class="row justify-content-center" th:action="@{'/adminTrainer/addQuiz/'+${lessonUpdate.id}}" onsubmit="return checkFile()"
+            <div class="row">
+                <div class="col-9">
+                    <form class="row justify-content-center" th:action="@{'/adminTrainer/addQuiz/'+${lessonUpdate.id}}" onsubmit="return checkFile()"
                   th:object="${lessonUpdate}" enctype="multipart/form-data" method="post">
                 <div class="col-xl-6 card p-3 rounded shadow-lg p-3 mb-5 bg-body-tertiary">
                     <div class="mb-3 text-end">
                         <h3 class="fs-5 text-center pb-3">Add File Excel Quiz test</h3>
                         <input name="testFile" type="file" id="fileQuiz">
-
                     </div>
                     <div>
                         <a th:href="@{'/adminTrainer/edit/'+${lessonUpdate.getCourseEditId()}}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
@@ -47,7 +48,14 @@
                     </div>
                 </div>
             </form>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <div>
+                        <a href="/adminTrainer/getQuiz" class="btn btn-primary">Download form quiz</a>
+                    </div>
 
+                </div>
+            </div>
 
             <div class="row d-flex" th:each="list : ${testList}">
                 <div class="mb-3 col-8">
