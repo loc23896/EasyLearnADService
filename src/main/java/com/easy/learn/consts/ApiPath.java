@@ -141,5 +141,11 @@ public interface ApiPath {
 
 //END ADMIN_TRAINER_TEST_EDIT by LOC
 
+    String VIDEO_GET_ALL = API + "/video/get-all";
+    String VIDEO_GET_ONE = API + "/video/get-one";
+    String VIDEO_CREATE = API + "/video/create";
+    String VIDEO_UPDATE = API + "/video/update";
+    String VIDEO_DELETE = API + "/video/delete";
+
 
 }

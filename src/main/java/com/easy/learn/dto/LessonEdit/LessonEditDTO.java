@@ -33,6 +33,7 @@ public class LessonEditDTO extends ResponseDTO<LessonEditDTO> {
     private String video;
 
     private String test;
+
     private Integer duration;
 
     private Long courseEditId;
